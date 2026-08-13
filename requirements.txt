@@ -2,7 +2,7 @@ streamlit
 pandas
 numpy
 plotly
-tensorflow
+tensorflow==2.21.0
 scikit-learn
 h5py
 Pillow
