@@ -1,0 +1,12 @@
+{
+    "stock": "Infosys",
+    "status": "trained",
+    "model": "models\\infosys_lstm_model.keras",
+    "epochs_completed": 100,
+    "MAE": 34.72572055939705,
+    "RMSE": 45.26643013364241,
+    "MAPE": 2.715171400952188,
+    "R2": 0.9468184538223606,
+    "final_training_loss": 0.003248161170631647,
+    "final_validation_loss": 0.0018466926412656903
+}

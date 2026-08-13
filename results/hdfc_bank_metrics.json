@@ -1,0 +1,12 @@
+{
+    "stock": "HDFC Bank",
+    "status": "trained",
+    "model": "models\\hdfc_bank_lstm_model.keras",
+    "epochs_completed": 32,
+    "MAE": 12.972222851168725,
+    "RMSE": 17.28257969335158,
+    "MAPE": 1.5355291016549264,
+    "R2": 0.9688339211582606,
+    "final_training_loss": 0.0025818669237196445,
+    "final_validation_loss": 0.0047902800142765045
+}

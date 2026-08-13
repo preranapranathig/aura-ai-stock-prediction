@@ -1,0 +1,12 @@
+{
+    "stock": "Tesla",
+    "status": "trained",
+    "model": "models\\tesla_lstm_model.keras",
+    "epochs_completed": 54,
+    "MAE": 15.811835908319852,
+    "RMSE": 20.126873846470968,
+    "MAPE": 3.9134203143217174,
+    "R2": 0.7610253138253666,
+    "final_training_loss": 0.0027901174034923315,
+    "final_validation_loss": 0.0030749295838177204
+}

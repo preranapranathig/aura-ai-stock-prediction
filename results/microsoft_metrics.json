@@ -1,0 +1,12 @@
+{
+    "stock": "Microsoft",
+    "status": "trained",
+    "model": "models\\microsoft_lstm_model.keras",
+    "epochs_completed": 14,
+    "MAE": 19.98115642897161,
+    "RMSE": 26.220401869179877,
+    "MAPE": 4.56006839117633,
+    "R2": 0.7562168407495291,
+    "final_training_loss": 0.002416968811303377,
+    "final_validation_loss": 0.0060699740424752235
+}

@@ -1,0 +1,79 @@
+[
+    {
+        "stock": "TCS",
+        "status": "existing",
+        "model": "models\\tcs_lstm_model.keras"
+    },
+    {
+        "stock": "Infosys",
+        "status": "trained",
+        "model": "models\\infosys_lstm_model.keras",
+        "epochs_completed": 100,
+        "MAE": 34.72572055939705,
+        "RMSE": 45.26643013364241,
+        "MAPE": 2.715171400952188,
+        "R2": 0.9468184538223606,
+        "final_training_loss": 0.003248161170631647,
+        "final_validation_loss": 0.0018466926412656903
+    },
+    {
+        "stock": "Reliance",
+        "status": "trained",
+        "model": "models\\reliance_lstm_model.keras",
+        "epochs_completed": 58,
+        "MAE": 21.19865269814769,
+        "RMSE": 26.997501563500393,
+        "MAPE": 1.520305618055085,
+        "R2": 0.8939597313548951,
+        "final_training_loss": 0.0025177448987960815,
+        "final_validation_loss": 0.003250943962484598
+    },
+    {
+        "stock": "HDFC Bank",
+        "status": "trained",
+        "model": "models\\hdfc_bank_lstm_model.keras",
+        "epochs_completed": 32,
+        "MAE": 12.972222851168725,
+        "RMSE": 17.28257969335158,
+        "MAPE": 1.5355291016549264,
+        "R2": 0.9688339211582606,
+        "final_training_loss": 0.0025818669237196445,
+        "final_validation_loss": 0.0047902800142765045
+    },
+    {
+        "stock": "Apple",
+        "status": "trained",
+        "model": "models\\apple_lstm_model.keras",
+        "epochs_completed": 22,
+        "MAE": 8.214184339302944,
+        "RMSE": 10.422982381346014,
+        "MAPE": 2.947413734613837,
+        "R2": 0.8352580812588524,
+        "final_training_loss": 0.003207981353625655,
+        "final_validation_loss": 0.004861101508140564
+    },
+    {
+        "stock": "Microsoft",
+        "status": "trained",
+        "model": "models\\microsoft_lstm_model.keras",
+        "epochs_completed": 14,
+        "MAE": 19.98115642897161,
+        "RMSE": 26.220401869179877,
+        "MAPE": 4.56006839117633,
+        "R2": 0.7562168407495291,
+        "final_training_loss": 0.002416968811303377,
+        "final_validation_loss": 0.0060699740424752235
+    },
+    {
+        "stock": "Tesla",
+        "status": "trained",
+        "model": "models\\tesla_lstm_model.keras",
+        "epochs_completed": 54,
+        "MAE": 15.811835908319852,
+        "RMSE": 20.126873846470968,
+        "MAPE": 3.9134203143217174,
+        "R2": 0.7610253138253666,
+        "final_training_loss": 0.0027901174034923315,
+        "final_validation_loss": 0.0030749295838177204
+    }
+]
