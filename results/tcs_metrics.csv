@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+TCS,trained,models\tcs_lstm_model.keras,58,312.29839384839886,416.16608115332946,13.25838111501616,-0.07694498868760213,0.0035193327348679304,0.0021203733049333096

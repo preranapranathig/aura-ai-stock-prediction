@@ -1,0 +1,21 @@
+{
+    "stock": "apple",
+    "status": "trained",
+    "model": "models\\apple_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 48,
+    "MAE": 9.954487210228327,
+    "RMSE": 12.609582314209216,
+    "MAPE": 3.481927070351061,
+    "R2": 0.7559900105504673,
+    "final_training_loss": 0.0023936601355671883,
+    "final_validation_loss": 0.003553439863026142
+}

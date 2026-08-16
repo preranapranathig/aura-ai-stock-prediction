@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+hdfc_bank,trained,models\hdfc_bank_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,19,46.10426305955456,59.788092503780334,5.589433940384205,0.6270123739716396,0.013510581105947495,0.03194660693407059

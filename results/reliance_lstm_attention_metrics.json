@@ -1,0 +1,21 @@
+{
+    "stock": "reliance",
+    "status": "trained",
+    "model": "models\\reliance_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 12,
+    "MAE": 70.65265483240927,
+    "RMSE": 78.11583420344219,
+    "MAPE": 5.073463241413486,
+    "R2": 0.11222723166657012,
+    "final_training_loss": 0.019200628623366356,
+    "final_validation_loss": 0.026442458853125572
+}

@@ -1,0 +1,21 @@
+{
+    "stock": "hdfc_bank",
+    "status": "trained",
+    "model": "models\\hdfc_bank_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 11,
+    "MAE": 53.056488037109375,
+    "RMSE": 67.8801982731136,
+    "MAPE": 6.468829209303201,
+    "R2": 0.5192146420395216,
+    "final_training_loss": 0.014961756765842438,
+    "final_validation_loss": 0.03761306032538414
+}

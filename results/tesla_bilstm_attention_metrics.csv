@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+tesla,trained,models\tesla_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,12,94.07879384358723,100.8998422015106,22.58671816440976,-4.93868375178949,0.0200982466340065,0.01448585744947195

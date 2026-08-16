@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+Tesla,trained,models\tesla_lstm_model.keras,18,20.928097732855495,26.055799134250123,5.1054202324822935,0.6039791789894808,0.003232246031984687,0.004164035897701979

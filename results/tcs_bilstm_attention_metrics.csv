@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+tcs,trained,models\tcs_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,80,469.51119860300577,599.6222665173234,19.70638550181267,-1.2357109873897385,0.01002599485218525,0.008804615586996078

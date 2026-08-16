@@ -1,0 +1,8 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+tcs,trained,models\tcs_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,44,264.10353474444656,350.60982327911546,11.186737043439326,0.23562175597453683,0.0037445188499987125,0.0020184654276818037
+infosys,trained,models\infosys_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,44,34.092961935633156,44.03764320236657,2.6770334777530036,0.9499942640834071,0.0037725598085671663,0.0017735076835379004
+reliance,trained,models\reliance_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,60,20.210740120180198,25.788155287900278,1.4426543350608299,0.9032470483883912,0.0024333097971975803,0.002501229988411069
+hdfc_bank,trained,models\hdfc_bank_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,25,16.145971975018902,21.28731923047184,1.937615506977896,0.9527167876004247,0.0034382548183202744,0.002162344055250287
+apple,trained,models\apple_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,48,9.954487210228327,12.609582314209216,3.481927070351061,0.7559900105504673,0.0023936601355671883,0.003553439863026142
+microsoft,trained,models\microsoft_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,31,18.766446786097795,22.275247665018938,4.19351830026027,0.8240577683087829,0.0017086667940020561,0.0065123396925628185
+tesla,trained,models\tesla_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,13,31.098679557679198,36.57139057379349,7.41999724598147,0.21982474281118713,0.003789091482758522,0.004107186570763588

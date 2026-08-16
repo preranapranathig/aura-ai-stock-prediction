@@ -1,0 +1,21 @@
+{
+    "stock": "microsoft",
+    "status": "trained",
+    "model": "models\\microsoft_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 31,
+    "MAE": 18.766446786097795,
+    "RMSE": 22.275247665018938,
+    "MAPE": 4.19351830026027,
+    "R2": 0.8240577683087829,
+    "final_training_loss": 0.0017086667940020561,
+    "final_validation_loss": 0.0065123396925628185
+}

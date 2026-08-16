@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+microsoft,trained,models\microsoft_lstm_attention_model.keras,LSTM + Attention,"['Open', 'High', 'Low', 'Close', 'Volume']",60,15,33.988717979643916,42.0312990651099,8.125481500783918,0.37357275289017544,0.00822083093225956,0.031797368079423904

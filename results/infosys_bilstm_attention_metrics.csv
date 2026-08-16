@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+infosys,trained,models\infosys_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,13,125.83499304836533,153.64988107958484,10.052102956044976,0.3912539684178451,0.03398986905813217,0.029015086591243744

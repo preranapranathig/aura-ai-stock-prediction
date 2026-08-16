@@ -3,10 +3,10 @@
     "status": "trained",
     "model": "models\\apple_lstm_model.keras",
     "epochs_completed": 22,
-    "MAE": 8.214184339302944,
-    "RMSE": 10.422982381346014,
-    "MAPE": 2.947413734613837,
-    "R2": 0.8352580812588524,
-    "final_training_loss": 0.003207981353625655,
-    "final_validation_loss": 0.004861101508140564
+    "MAE": 10.151561613242947,
+    "RMSE": 13.165603089212947,
+    "MAPE": 3.561362829369251,
+    "R2": 0.7339962738930954,
+    "final_training_loss": 0.002753910608589649,
+    "final_validation_loss": 0.005211534444242716
 }

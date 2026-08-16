@@ -4,6 +4,7 @@ import joblib
 import yfinance as yf
 
 from tensorflow.keras.models import load_model
+from sklearn.preprocessing import MinMaxScaler
 
 
 # ============================================================
@@ -22,12 +23,32 @@ SCALER_PATH = "data/processed/scaler.pkl"
 
 
 # ============================================================
-# 1. DOWNLOAD LATEST STOCK DATA
+# START
 # ============================================================
 
 print("=" * 60)
 print("LIVE TCS STOCK PRICE PREDICTION")
 print("=" * 60)
+
+
+# ============================================================
+# 1. LOAD MODEL
+# ============================================================
+
+print("\nLoading trained LSTM model...")
+
+model = load_model(MODEL_PATH)
+
+print("Model loaded successfully! ✅")
+
+print(
+    f"Model input shape: {model.input_shape}"
+)
+
+
+# ============================================================
+# 2. DOWNLOAD LATEST DATA
+# ============================================================
 
 print(f"\nDownloading latest data for {TICKER}...")
 
@@ -40,18 +61,13 @@ data = yf.download(
 )
 
 
-# ============================================================
-# 2. CHECK DATA
-# ============================================================
-
 if data.empty:
-
     raise RuntimeError(
         "Could not download stock data."
     )
 
 
-# Handle yfinance multi-level columns
+# Handle yfinance MultiIndex
 
 if isinstance(data.columns, pd.MultiIndex):
 
@@ -67,91 +83,125 @@ print(
 
 
 # ============================================================
-# 3. CHECK FOR ENOUGH DATA
+# 3. CHECK DATA
 # ============================================================
+
+FEATURES = [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Volume"
+]
+
+
+missing = [
+    col for col in FEATURES
+    if col not in data.columns
+]
+
+
+if missing:
+
+    raise RuntimeError(
+        f"Missing required columns: {missing}"
+    )
+
 
 if len(data) < SEQUENCE_LENGTH:
 
     raise RuntimeError(
-        f"Not enough data. "
-        f"Need at least {SEQUENCE_LENGTH} trading days."
+        f"Need at least {SEQUENCE_LENGTH} "
+        f"trading days."
     )
 
 
 # ============================================================
-# 4. GET CLOSE PRICES
+# 4. EXTRACT 5 FEATURES
 # ============================================================
 
-close_prices = data["Close"].values.reshape(-1, 1)
+feature_data = data[
+    FEATURES
+].astype(float)
 
 
 latest_actual_price = float(
-    close_prices[-1][0]
+    feature_data["Close"].iloc[-1]
 )
 
 
 # ============================================================
-# 5. LOAD SCALER
+# 5. LOAD TARGET SCALER
 # ============================================================
 
 print("\nLoading scaler...")
 
-scaler = joblib.load(
+target_scaler = joblib.load(
     SCALER_PATH
 )
 
+print("Scaler loaded successfully! ✅")
+
 
 # ============================================================
-# 6. SCALE LATEST DATA
+# 6. SCALE FIVE INPUT FEATURES
 # ============================================================
 
-scaled_prices = scaler.transform(
-    close_prices
+print("\nPreparing 5-feature input...")
+
+feature_scaler = MinMaxScaler()
+
+scaled_features = feature_scaler.fit_transform(
+    feature_data.values
 )
 
 
 # ============================================================
-# 7. TAKE LAST 60 DAYS
+# 7. LAST 60 DAYS
 # ============================================================
 
-latest_sequence = scaled_prices[
+latest_sequence = scaled_features[
     -SEQUENCE_LENGTH:
 ]
 
 
 # ============================================================
-# 8. RESHAPE FOR LSTM
+# 8. CREATE LSTM INPUT
 # ============================================================
 
 X_input = latest_sequence.reshape(
     1,
     SEQUENCE_LENGTH,
-    1
+    5
 )
 
 
 print(
-    f"\nInput shape: {X_input.shape}"
+    f"Input shape: {X_input.shape}"
 )
 
 
 # ============================================================
-# 9. LOAD TRAINED MODEL
+# SAFETY CHECK
 # ============================================================
 
-print("\nLoading trained LSTM model...")
-
-model = load_model(
-    MODEL_PATH
-)
+expected_features = model.input_shape[-1]
 
 
-print("Model loaded successfully! ✅")
+if X_input.shape[-1] != expected_features:
+
+    raise RuntimeError(
+        f"Feature mismatch!\n"
+        f"Model expects: {expected_features}\n"
+        f"Input contains: {X_input.shape[-1]}"
+    )
 
 
 # ============================================================
-# 10. NORMAL PREDICTION
+# 9. NORMAL PREDICTION
 # ============================================================
+
+print("\nGenerating prediction...")
 
 normal_prediction_scaled = model.predict(
     X_input,
@@ -159,13 +209,13 @@ normal_prediction_scaled = model.predict(
 )
 
 
-normal_prediction = scaler.inverse_transform(
-    normal_prediction_scaled
+normal_prediction = target_scaler.inverse_transform(
+    normal_prediction_scaled.reshape(-1, 1)
 )[0][0]
 
 
 # ============================================================
-# 11. MONTE CARLO DROPOUT
+# 10. MONTE CARLO DROPOUT
 # ============================================================
 
 print(
@@ -177,9 +227,7 @@ print(
 mc_predictions = []
 
 
-for i in range(MONTE_CARLO_RUNS):
-
-    # training=True keeps Dropout active
+for _ in range(MONTE_CARLO_RUNS):
 
     prediction = model(
         X_input,
@@ -197,7 +245,7 @@ mc_predictions = np.array(
 
 
 # ============================================================
-# 12. CALCULATE PREDICTION STATISTICS
+# 11. STATISTICS
 # ============================================================
 
 mean_scaled = np.mean(
@@ -208,12 +256,10 @@ std_scaled = np.std(
     mc_predictions
 )
 
-
 lower_scaled = np.percentile(
     mc_predictions,
     2.5
 )
-
 
 upper_scaled = np.percentile(
     mc_predictions,
@@ -222,30 +268,33 @@ upper_scaled = np.percentile(
 
 
 # ============================================================
-# 13. CONVERT BACK TO PRICE
+# 12. CONVERT TO PRICE
 # ============================================================
 
-mean_prediction = scaler.inverse_transform(
+mean_prediction = target_scaler.inverse_transform(
     np.array([[mean_scaled]])
 )[0][0]
 
 
-lower_bound = scaler.inverse_transform(
+lower_bound = target_scaler.inverse_transform(
     np.array([[lower_scaled]])
 )[0][0]
 
 
-upper_bound = scaler.inverse_transform(
+upper_bound = target_scaler.inverse_transform(
     np.array([[upper_scaled]])
 )[0][0]
 
 
-# Convert uncertainty to original price scale
+# ============================================================
+# 13. UNCERTAINTY
+# ============================================================
 
 price_range = (
-    scaler.data_max_[0]
-    - scaler.data_min_[0]
+    target_scaler.data_max_[0]
+    - target_scaler.data_min_[0]
 )
+
 
 uncertainty = (
     std_scaled * price_range
@@ -253,7 +302,7 @@ uncertainty = (
 
 
 # ============================================================
-# 14. CALCULATE EXPECTED MOVEMENT
+# 14. EXPECTED MOVEMENT
 # ============================================================
 
 percentage_change = (
@@ -263,7 +312,7 @@ percentage_change = (
 
 
 # ============================================================
-# 15. GENERATE SIMPLE MODEL SIGNAL
+# 15. SIGNAL
 # ============================================================
 
 if percentage_change > 1:
@@ -284,37 +333,46 @@ else:
 # ============================================================
 
 print("\n" + "=" * 60)
+
 print("LIVE PREDICTION RESULTS")
+
 print("=" * 60)
+
 
 print(
     f"\nLatest actual price:"
     f" ₹{latest_actual_price:,.2f}"
 )
 
+
 print(
     f"\nPredicted price:"
     f" ₹{mean_prediction:,.2f}"
 )
+
 
 print(
     f"\nExpected movement:"
     f" {percentage_change:+.2f}%"
 )
 
+
 print(
     f"\nModel signal:"
     f" {signal}"
 )
+
 
 print(
     f"\nPrediction uncertainty:"
     f" ±₹{uncertainty:,.2f}"
 )
 
+
 print(
     "\n95% Prediction Interval:"
 )
+
 
 print(
     f"₹{lower_bound:,.2f}"
@@ -324,5 +382,7 @@ print(
 
 
 print("\n" + "=" * 60)
+
 print("LIVE PREDICTION COMPLETED! ✅")
+
 print("=" * 60)

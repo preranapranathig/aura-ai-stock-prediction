@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+reliance,trained,models\reliance_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,60,20.210740120180198,25.788155287900278,1.4426543350608299,0.9032470483883912,0.0024333097971975803,0.002501229988411069

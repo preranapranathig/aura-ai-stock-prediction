@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+infosys,trained,models\infosys_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,44,34.092961935633156,44.03764320236657,2.6770334777530036,0.9499942640834071,0.0037725598085671663,0.0017735076835379004

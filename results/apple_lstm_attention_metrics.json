@@ -1,0 +1,21 @@
+{
+    "stock": "apple",
+    "status": "trained",
+    "model": "models\\apple_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 42,
+    "MAE": 26.714432973710316,
+    "RMSE": 31.234396157517782,
+    "MAPE": 9.456956350877032,
+    "R2": -0.4971745384289892,
+    "final_training_loss": 0.012961187399923801,
+    "final_validation_loss": 0.01262002531439066
+}

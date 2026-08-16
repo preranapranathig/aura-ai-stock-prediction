@@ -1,0 +1,21 @@
+{
+    "stock": "TCS",
+    "status": "trained",
+    "model": "models/tcs_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 50,
+    "MAE": 142.6863236781576,
+    "RMSE": 183.97158028678246,
+    "MAPE": 5.914363842874087,
+    "R2": 0.7895438430851551,
+    "final_training_loss": 0.003655634820461273,
+    "final_validation_loss": 0.0019946270622313023
+}

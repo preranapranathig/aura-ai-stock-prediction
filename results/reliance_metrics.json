@@ -2,11 +2,11 @@
     "stock": "Reliance",
     "status": "trained",
     "model": "models\\reliance_lstm_model.keras",
-    "epochs_completed": 58,
-    "MAE": 21.19865269814769,
-    "RMSE": 26.997501563500393,
-    "MAPE": 1.520305618055085,
-    "R2": 0.8939597313548951,
-    "final_training_loss": 0.0025177448987960815,
-    "final_validation_loss": 0.003250943962484598
+    "epochs_completed": 27,
+    "MAE": 26.882232694369655,
+    "RMSE": 33.7972064542823,
+    "MAPE": 1.913882477310263,
+    "R2": 0.8338175036051952,
+    "final_training_loss": 0.0038003537338227034,
+    "final_validation_loss": 0.005932339932769537
 }

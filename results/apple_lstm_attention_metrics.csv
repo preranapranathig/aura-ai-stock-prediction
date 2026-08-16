@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+apple,trained,models\apple_lstm_attention_model.keras,LSTM + Attention,"['Open', 'High', 'Low', 'Close', 'Volume']",60,42,26.714432973710316,31.234396157517782,9.456956350877032,-0.4971745384289892,0.012961187399923801,0.01262002531439066

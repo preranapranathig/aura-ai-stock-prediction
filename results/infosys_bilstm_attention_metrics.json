@@ -1,0 +1,15 @@
+{
+    "stock": "infosys",
+    "status": "trained",
+    "model": "models\\infosys_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 13,
+    "MAE": 125.83499304836533,
+    "RMSE": 153.64988107958484,
+    "MAPE": 10.052102956044976,
+    "R2": 0.3912539684178451,
+    "final_training_loss": 0.03398986905813217,
+    "final_validation_loss": 0.029015086591243744
+}

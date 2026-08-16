@@ -1,0 +1,15 @@
+{
+    "stock": "apple",
+    "status": "trained",
+    "model": "models\\apple_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 17,
+    "MAE": 34.579529595753506,
+    "RMSE": 39.15573450204218,
+    "MAPE": 12.226118466208973,
+    "R2": -1.3528647010016592,
+    "final_training_loss": 0.013804055750370026,
+    "final_validation_loss": 0.012281801551580429
+}

@@ -1,0 +1,21 @@
+{
+    "stock": "infosys",
+    "status": "trained",
+    "model": "models\\infosys_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 14,
+    "MAE": 137.05923327097452,
+    "RMSE": 165.39370401410878,
+    "MAPE": 11.0072955972883,
+    "R2": 0.2946419406330376,
+    "final_training_loss": 0.032761890441179276,
+    "final_validation_loss": 0.02942141890525818
+}

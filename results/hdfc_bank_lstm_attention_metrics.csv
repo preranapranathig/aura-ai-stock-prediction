@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+hdfc_bank,trained,models\hdfc_bank_lstm_attention_model.keras,LSTM + Attention,"['Open', 'High', 'Low', 'Close', 'Volume']",60,11,53.056488037109375,67.8801982731136,6.468829209303201,0.5192146420395216,0.014961756765842438,0.03761306032538414

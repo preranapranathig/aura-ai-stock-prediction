@@ -1,0 +1,21 @@
+{
+    "stock": "reliance",
+    "status": "trained",
+    "model": "models\\reliance_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 60,
+    "MAE": 20.210740120180198,
+    "RMSE": 25.788155287900278,
+    "MAPE": 1.4426543350608299,
+    "R2": 0.9032470483883912,
+    "final_training_loss": 0.0024333097971975803,
+    "final_validation_loss": 0.002501229988411069
+}

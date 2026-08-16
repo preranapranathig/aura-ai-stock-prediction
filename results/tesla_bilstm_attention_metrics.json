@@ -1,0 +1,15 @@
+{
+    "stock": "tesla",
+    "status": "trained",
+    "model": "models\\tesla_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 12,
+    "MAE": 94.07879384358723,
+    "RMSE": 100.8998422015106,
+    "MAPE": 22.58671816440976,
+    "R2": -4.93868375178949,
+    "final_training_loss": 0.0200982466340065,
+    "final_validation_loss": 0.01448585744947195
+}

@@ -1,0 +1,21 @@
+{
+    "stock": "microsoft",
+    "status": "trained",
+    "model": "models\\microsoft_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 15,
+    "MAE": 33.988717979643916,
+    "RMSE": 42.0312990651099,
+    "MAPE": 8.125481500783918,
+    "R2": 0.37357275289017544,
+    "final_training_loss": 0.00822083093225956,
+    "final_validation_loss": 0.031797368079423904
+}

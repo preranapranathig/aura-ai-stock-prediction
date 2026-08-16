@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+Reliance,trained,models\reliance_lstm_model.keras,27,26.882232694369655,33.7972064542823,1.913882477310263,0.8338175036051952,0.0038003537338227034,0.005932339932769537

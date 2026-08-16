@@ -1,0 +1,2 @@
+stock,status,model,architecture,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+TCS,trained,models/tcs_lstm_attention_model.keras,LSTM + Attention,100,238.83005704458458,297.8458713918291,9.733660247284345,0.44837577947867024,0.007998939603567123,0.012711071409285069

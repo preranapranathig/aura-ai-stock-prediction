@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+Infosys,trained,models\infosys_lstm_model.keras,67,37.2123024768999,47.68724756442535,2.964009468921297,0.9413623983499194,0.0031085603404790163,0.0015526642091572285

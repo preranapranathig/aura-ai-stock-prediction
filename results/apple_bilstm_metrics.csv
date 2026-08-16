@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+apple,trained,models\apple_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,48,9.954487210228327,12.609582314209216,3.481927070351061,0.7559900105504673,0.0023936601355671883,0.003553439863026142

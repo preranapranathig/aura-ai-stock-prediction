@@ -1,0 +1,21 @@
+{
+    "stock": "TCS",
+    "status": "trained",
+    "model": "models/tcs_lstm_attention_model.keras",
+    "architecture": "LSTM + Attention",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 100,
+    "MAE": 238.83005704458458,
+    "RMSE": 297.8458713918291,
+    "MAPE": 9.733660247284345,
+    "R2": 0.44837577947867024,
+    "final_training_loss": 0.007998939603567123,
+    "final_validation_loss": 0.012711071409285069
+}

@@ -1,0 +1,8 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+tcs,trained,models\tcs_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,80,469.51119860300577,599.6222665173234,19.70638550181267,-1.2357109873897385,0.01002599485218525,0.008804615586996078
+infosys,trained,models\infosys_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,13,125.83499304836533,153.64988107958484,10.052102956044976,0.3912539684178451,0.03398986905813217,0.029015086591243744
+reliance,trained,models\reliance_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,14,67.61794650170111,74.29305598910997,4.856888512486764,0.1969915497085044,0.016570543870329857,0.02050347812473774
+hdfc_bank,trained,models\hdfc_bank_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,19,46.10426305955456,59.788092503780334,5.589433940384205,0.6270123739716396,0.013510581105947495,0.03194660693407059
+apple,trained,models\apple_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,17,34.579529595753506,39.15573450204218,12.226118466208973,-1.3528647010016592,0.013804055750370026,0.012281801551580429
+microsoft,trained,models\microsoft_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,15,37.082326699063124,42.405211327026926,8.558558052329095,0.36237772970299886,0.009079989045858383,0.03167623281478882
+tesla,trained,models\tesla_bilstm_attention_model.keras,BiLSTM + Attention,"Open, High, Low, Close, Volume",60,12,94.07879384358723,100.8998422015106,22.58671816440976,-4.93868375178949,0.0200982466340065,0.01448585744947195

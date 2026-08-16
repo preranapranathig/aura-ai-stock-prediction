@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+tesla,trained,models\tesla_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,13,31.098679557679198,36.57139057379349,7.41999724598147,0.21982474281118713,0.003789091482758522,0.004107186570763588

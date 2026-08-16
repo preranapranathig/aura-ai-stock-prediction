@@ -1,0 +1,2 @@
+stock,status,model,architecture,features,sequence_length,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+hdfc_bank,trained,models\hdfc_bank_bilstm_model.keras,BiLSTM,"['Open', 'High', 'Low', 'Close', 'Volume']",60,25,16.145971975018902,21.28731923047184,1.937615506977896,0.9527167876004247,0.0034382548183202744,0.002162344055250287

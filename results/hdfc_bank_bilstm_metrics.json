@@ -1,0 +1,21 @@
+{
+    "stock": "hdfc_bank",
+    "status": "trained",
+    "model": "models\\hdfc_bank_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 25,
+    "MAE": 16.145971975018902,
+    "RMSE": 21.28731923047184,
+    "MAPE": 1.937615506977896,
+    "R2": 0.9527167876004247,
+    "final_training_loss": 0.0034382548183202744,
+    "final_validation_loss": 0.002162344055250287
+}

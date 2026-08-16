@@ -1,25 +1,32 @@
 import os
 import json
+import csv
 import numpy as np
 import joblib
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Input, LSTM, Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score
+)
 
 
 # ============================================================
-# AURA AI — MULTI-STOCK LSTM TRAINING ENGINE
+# AURA AI
+# MULTI-STOCK LSTM TRAINING ENGINE
 # ============================================================
 
 print("=" * 80)
-print("          AURA AI — MULTI-STOCK LSTM TRAINING ENGINE")
+print("          AURA AI - MULTI-STOCK LSTM TRAINING ENGINE")
 print("=" * 80)
 
 
 # ============================================================
-# CONFIGURATION
+# STOCK CONFIGURATION
 # ============================================================
 
 STOCKS = {
@@ -40,23 +47,18 @@ STOCKS = {
 EPOCHS = 100
 BATCH_SIZE = 32
 VALIDATION_SPLIT = 0.10
-
 PATIENCE = 12
 
-# ------------------------------------------------------------
-# IMPORTANT
-#
-# Your original TCS model already works.
-# Therefore we keep it untouched.
-#
-# Change this to True later if you want to retrain TCS.
-# ------------------------------------------------------------
+# IMPORTANT:
+# We are now training models using the newly preprocessed data.
+# Therefore TCS must also be retrained if its preprocessing
+# structure has changed from the old model.
 
-TRAIN_TCS = False
+TRAIN_TCS = True
 
 
 # ============================================================
-# CREATE REQUIRED DIRECTORIES
+# DIRECTORIES
 # ============================================================
 
 os.makedirs("models", exist_ok=True)
@@ -64,37 +66,37 @@ os.makedirs("results", exist_ok=True)
 
 
 # ============================================================
-# BUILD LSTM MODEL
+# LSTM MODEL
 # ============================================================
 
 def build_model(input_shape):
 
-    model = Sequential([
+    model = Sequential(
+        [
+            Input(shape=input_shape),
 
-        Input(shape=input_shape),
+            LSTM(
+                64,
+                return_sequences=True
+            ),
 
-        LSTM(
-            64,
-            return_sequences=True
-        ),
+            Dropout(0.20),
 
-        Dropout(0.20),
+            LSTM(
+                32,
+                return_sequences=False
+            ),
 
-        LSTM(
-            32,
-            return_sequences=False
-        ),
+            Dropout(0.20),
 
-        Dropout(0.20),
+            Dense(
+                16,
+                activation="relu"
+            ),
 
-        Dense(
-            16,
-            activation="relu"
-        ),
-
-        Dense(1)
-
-    ])
+            Dense(1)
+        ]
+    )
 
     model.compile(
         optimizer="adam",
@@ -105,10 +107,119 @@ def build_model(input_shape):
 
 
 # ============================================================
+# INVERSE TRANSFORM TARGET
+# ============================================================
+
+def inverse_transform_target(
+    scaler,
+    values,
+    n_features
+):
+    """
+    Convert scaled Close prices back to original price.
+
+    Supports both:
+    1. One-feature scaler
+    2. Five-feature OHLCV scaler
+
+    Expected OHLCV order:
+    Open, High, Low, Close, Volume
+    """
+
+    values = np.asarray(values).reshape(-1)
+
+    # --------------------------------------------------------
+    # Case 1: scaler contains only one feature
+    # --------------------------------------------------------
+
+    if n_features == 1:
+
+        restored = scaler.inverse_transform(
+            values.reshape(-1, 1)
+        )
+
+        return restored.reshape(-1)
+
+    # --------------------------------------------------------
+    # Case 2: scaler contains multiple features
+    # --------------------------------------------------------
+
+    temp = np.zeros(
+        (len(values), n_features)
+    )
+
+    # Close is feature index 3 in OHLCV
+    CLOSE_INDEX = 3
+
+    temp[:, CLOSE_INDEX] = values
+
+    restored = scaler.inverse_transform(temp)
+
+    return restored[:, CLOSE_INDEX]
+
+
+# ============================================================
+# SAVE METRICS TO CSV
+# ============================================================
+
+def save_metrics_csv(
+    stock_name,
+    folder_name,
+    metrics
+):
+
+    metrics_path = os.path.join(
+        "results",
+        f"{folder_name}_metrics.csv"
+    )
+
+    file_exists = os.path.exists(
+        metrics_path
+    )
+
+    fieldnames = [
+        "stock",
+        "status",
+        "model",
+        "epochs_completed",
+        "MAE",
+        "RMSE",
+        "MAPE",
+        "R2",
+        "final_training_loss",
+        "final_validation_loss"
+    ]
+
+    with open(
+        metrics_path,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
+
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames
+        )
+
+        writer.writeheader()
+        writer.writerow(metrics)
+
+    print(
+        f"Metrics CSV saved: {metrics_path}"
+    )
+
+    return metrics_path
+
+
+# ============================================================
 # TRAIN ONE STOCK
 # ============================================================
 
-def train_stock(stock_name, folder_name):
+def train_stock(
+    stock_name,
+    folder_name
+):
 
     print("\n")
     print("=" * 80)
@@ -116,7 +227,7 @@ def train_stock(stock_name, folder_name):
     print("=" * 80)
 
     # --------------------------------------------------------
-    # Existing TCS model protection
+    # MODEL PATH
     # --------------------------------------------------------
 
     model_path = os.path.join(
@@ -124,26 +235,8 @@ def train_stock(stock_name, folder_name):
         f"{folder_name}_lstm_model.keras"
     )
 
-    if (
-        stock_name == "TCS"
-        and not TRAIN_TCS
-        and os.path.exists(model_path)
-    ):
-
-        print("\nTCS model already exists.")
-
-        print(
-            "Keeping the existing TCS model unchanged. ✅"
-        )
-
-        return {
-            "stock": stock_name,
-            "status": "existing",
-            "model": model_path
-        }
-
     # --------------------------------------------------------
-    # Data paths
+    # DATA PATHS
     # --------------------------------------------------------
 
     processed_folder = os.path.join(
@@ -178,7 +271,7 @@ def train_stock(stock_name, folder_name):
     )
 
     # --------------------------------------------------------
-    # Check files
+    # CHECK REQUIRED FILES
     # --------------------------------------------------------
 
     required_files = [
@@ -193,51 +286,101 @@ def train_stock(stock_name, folder_name):
 
         if not os.path.exists(file_path):
 
-            print(
-                f"\nERROR: Missing file:"
-            )
-
+            print("\nERROR: Missing file:")
             print(file_path)
 
             return {
                 "stock": stock_name,
-                "status": "failed"
+                "status": "failed",
+                "model": model_path
             }
 
     # --------------------------------------------------------
-    # Load data
+    # LOAD DATA
     # --------------------------------------------------------
 
     print("\nLoading processed data...")
 
-    X_train = np.load(X_train_path)
-    X_test = np.load(X_test_path)
+    X_train = np.load(
+        X_train_path
+    )
 
-    y_train = np.load(y_train_path)
-    y_test = np.load(y_test_path)
+    X_test = np.load(
+        X_test_path
+    )
+
+    y_train = np.load(
+        y_train_path
+    )
+
+    y_test = np.load(
+        y_test_path
+    )
 
     scaler = joblib.load(
         scaler_path
     )
 
+    # --------------------------------------------------------
+    # DISPLAY DATA SHAPES
+    # --------------------------------------------------------
+
     print(
-        f"X_train: {X_train.shape}"
+        f"X_train shape : {X_train.shape}"
     )
 
     print(
-        f"y_train: {y_train.shape}"
+        f"y_train shape : {y_train.shape}"
     )
 
     print(
-        f"X_test:  {X_test.shape}"
+        f"X_test shape  : {X_test.shape}"
     )
 
     print(
-        f"y_test:  {y_test.shape}"
+        f"y_test shape  : {y_test.shape}"
     )
 
     # --------------------------------------------------------
-    # Build model
+    # DETERMINE FEATURE COUNT
+    # --------------------------------------------------------
+
+    if len(X_train.shape) != 3:
+
+        raise ValueError(
+            "X_train must have shape "
+            "(samples, timesteps, features)."
+        )
+
+    n_features = X_train.shape[2]
+
+    print(
+        f"Number of input features: {n_features}"
+    )
+
+    if n_features == 5:
+
+        print(
+            "Feature configuration: "
+            "OHLCV"
+        )
+
+    elif n_features == 1:
+
+        print(
+            "Feature configuration: "
+            "Close price only"
+        )
+
+    else:
+
+        print(
+            "WARNING: Unexpected number "
+            "of features."
+        )
+
+    # --------------------------------------------------------
+    # BUILD MODEL
     # --------------------------------------------------------
 
     print("\nBuilding LSTM architecture...")
@@ -254,7 +397,7 @@ def train_stock(stock_name, folder_name):
     model.summary()
 
     # --------------------------------------------------------
-    # Callbacks
+    # CALLBACKS
     # --------------------------------------------------------
 
     early_stopping = EarlyStopping(
@@ -273,49 +416,37 @@ def train_stock(stock_name, folder_name):
     )
 
     # --------------------------------------------------------
-    # Train
+    # TRAIN
     # --------------------------------------------------------
 
     print("\n")
     print("-" * 80)
-
     print(
-        f"Starting training for {stock_name}..."
+        f"Starting training for {stock_name}"
     )
-
     print(
-        f"Maximum epochs: {EPOCHS}"
+        f"Maximum epochs : {EPOCHS}"
     )
-
     print(
-        f"Batch size: {BATCH_SIZE}"
+        f"Batch size     : {BATCH_SIZE}"
     )
-
     print("-" * 80)
 
     history = model.fit(
-
         X_train,
-
         y_train,
-
         epochs=EPOCHS,
-
         batch_size=BATCH_SIZE,
-
         validation_split=VALIDATION_SPLIT,
-
         callbacks=[
             early_stopping,
             reduce_lr
         ],
-
         verbose=1
-
     )
 
     # --------------------------------------------------------
-    # Save model
+    # SAVE MODEL
     # --------------------------------------------------------
 
     print("\nSaving model...")
@@ -325,13 +456,11 @@ def train_stock(stock_name, folder_name):
     )
 
     print(
-        f"Model saved:"
+        f"Model saved: {model_path}"
     )
 
-    print(model_path)
-
     # --------------------------------------------------------
-    # Predictions
+    # PREDICTIONS
     # --------------------------------------------------------
 
     print("\nEvaluating model...")
@@ -341,24 +470,34 @@ def train_stock(stock_name, folder_name):
         verbose=0
     )
 
-    predictions_scaled = predictions_scaled.reshape(-1, 1)
-
-    actual_scaled = y_test.reshape(-1, 1)
-
-    # --------------------------------------------------------
-    # Convert predictions back to real price
-    # --------------------------------------------------------
-
-    predictions = scaler.inverse_transform(
+    predictions_scaled = (
         predictions_scaled
-    ).flatten()
+        .reshape(-1)
+    )
 
-    actual = scaler.inverse_transform(
-        actual_scaled
-    ).flatten()
+    actual_scaled = (
+        y_test
+        .reshape(-1)
+    )
 
     # --------------------------------------------------------
-    # Metrics
+    # CONVERT TO REAL PRICE
+    # --------------------------------------------------------
+
+    predictions = inverse_transform_target(
+        scaler,
+        predictions_scaled,
+        n_features
+    )
+
+    actual = inverse_transform_target(
+        scaler,
+        actual_scaled,
+        n_features
+    )
+
+    # --------------------------------------------------------
+    # METRICS
     # --------------------------------------------------------
 
     mae = mean_absolute_error(
@@ -373,26 +512,36 @@ def train_stock(stock_name, folder_name):
         )
     )
 
-    # Prevent division by zero
+    # --------------------------------------------------------
+    # MAPE
+    # --------------------------------------------------------
+
     non_zero_mask = actual != 0
 
     if np.any(non_zero_mask):
 
-        mape = np.mean(
-            np.abs(
-                (
+        mape = (
+            np.mean(
+                np.abs(
+                    (
+                        actual[non_zero_mask]
+                        -
+                        predictions[non_zero_mask]
+                    )
+                    /
                     actual[non_zero_mask]
-                    -
-                    predictions[non_zero_mask]
                 )
-                /
-                actual[non_zero_mask]
             )
-        ) * 100
+            * 100
+        )
 
     else:
 
         mape = 0.0
+
+    # --------------------------------------------------------
+    # R2
+    # --------------------------------------------------------
 
     r2 = r2_score(
         actual,
@@ -400,7 +549,7 @@ def train_stock(stock_name, folder_name):
     )
 
     # --------------------------------------------------------
-    # Final training information
+    # TRAINING INFORMATION
     # --------------------------------------------------------
 
     epochs_completed = len(
@@ -416,7 +565,7 @@ def train_stock(stock_name, folder_name):
     )
 
     # --------------------------------------------------------
-    # Metrics dictionary
+    # METRICS DICTIONARY
     # --------------------------------------------------------
 
     metrics = {
@@ -427,36 +576,41 @@ def train_stock(stock_name, folder_name):
 
         "model": model_path,
 
-        "epochs_completed": epochs_completed,
+        "epochs_completed":
+            epochs_completed,
 
-        "MAE": float(mae),
+        "MAE":
+            float(mae),
 
-        "RMSE": float(rmse),
+        "RMSE":
+            float(rmse),
 
-        "MAPE": float(mape),
+        "MAPE":
+            float(mape),
 
-        "R2": float(r2),
+        "R2":
+            float(r2),
 
         "final_training_loss":
             final_train_loss,
 
         "final_validation_loss":
             final_val_loss
-
     }
 
     # --------------------------------------------------------
-    # Save metrics
+    # SAVE JSON
     # --------------------------------------------------------
 
-    metrics_path = os.path.join(
+    json_path = os.path.join(
         "results",
         f"{folder_name}_metrics.json"
     )
 
     with open(
-        metrics_path,
-        "w"
+        json_path,
+        "w",
+        encoding="utf-8"
     ) as file:
 
         json.dump(
@@ -466,7 +620,17 @@ def train_stock(stock_name, folder_name):
         )
 
     # --------------------------------------------------------
-    # Save predictions
+    # SAVE CSV
+    # --------------------------------------------------------
+
+    save_metrics_csv(
+        stock_name,
+        folder_name,
+        metrics
+    )
+
+    # --------------------------------------------------------
+    # SAVE PREDICTIONS
     # --------------------------------------------------------
 
     prediction_path = os.path.join(
@@ -480,17 +644,20 @@ def train_stock(stock_name, folder_name):
         predicted=predictions
     )
 
+    print(
+        f"Predictions saved: "
+        f"{prediction_path}"
+    )
+
     # --------------------------------------------------------
-    # Display results
+    # DISPLAY RESULTS
     # --------------------------------------------------------
 
     print("\n")
     print("-" * 80)
-
     print(
-        f"MODEL RESULTS — {stock_name}"
+        f"MODEL RESULTS - {stock_name}"
     )
-
     print("-" * 80)
 
     print(
@@ -506,17 +673,19 @@ def train_stock(stock_name, folder_name):
     )
 
     print(
-        f"R²   : {r2:.4f}"
+        f"R2   : {r2:.4f}"
     )
 
     print(
-        f"Epochs completed: {epochs_completed}"
+        f"Epochs completed: "
+        f"{epochs_completed}"
     )
 
     print("-" * 80)
 
     print(
-        f"STATUS: {stock_name} TRAINING COMPLETE ✅"
+        f"STATUS: "
+        f"{stock_name} TRAINING COMPLETE"
     )
 
     return metrics
@@ -536,14 +705,32 @@ def train_all_stocks():
 
     print("\n")
     print("=" * 80)
-
     print(
         "          STARTING MULTI-STOCK TRAINING"
     )
-
     print("=" * 80)
 
     for stock_name, folder_name in STOCKS.items():
+
+        # ----------------------------------------------------
+        # TCS CONTROL
+        # ----------------------------------------------------
+
+        if (
+            stock_name == "TCS"
+            and not TRAIN_TCS
+        ):
+
+            print(
+                "\nSkipping TCS "
+                "(TRAIN_TCS = False)"
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # TRAIN STOCK
+        # ----------------------------------------------------
 
         try:
 
@@ -552,12 +739,11 @@ def train_all_stocks():
                 folder_name
             )
 
-            results.append(result)
+            results.append(
+                result
+            )
 
-            if result["status"] in [
-                "trained",
-                "existing"
-            ]:
+            if result["status"] == "trained":
 
                 successful.append(
                     stock_name
@@ -573,10 +759,13 @@ def train_all_stocks():
 
             print("\n")
             print(
-                f"ERROR TRAINING {stock_name}"
+                f"ERROR TRAINING "
+                f"{stock_name}"
             )
 
-            print(error)
+            print(
+                f"Error: {error}"
+            )
 
             failed.append(
                 stock_name
@@ -593,7 +782,8 @@ def train_all_stocks():
 
     with open(
         master_metrics_path,
-        "w"
+        "w",
+        encoding="utf-8"
     ) as file:
 
         json.dump(
@@ -603,40 +793,80 @@ def train_all_stocks():
         )
 
     # ========================================================
+    # SAVE MASTER CSV
+    # ========================================================
+
+    master_csv_path = os.path.join(
+        "results",
+        "all_stock_metrics.csv"
+    )
+
+    if results:
+
+        fieldnames = [
+            "stock",
+            "status",
+            "model",
+            "epochs_completed",
+            "MAE",
+            "RMSE",
+            "MAPE",
+            "R2",
+            "final_training_loss",
+            "final_validation_loss"
+        ]
+
+        with open(
+            master_csv_path,
+            "w",
+            newline="",
+            encoding="utf-8"
+        ) as file:
+
+            writer = csv.DictWriter(
+                file,
+                fieldnames=fieldnames
+            )
+
+            writer.writeheader()
+
+            writer.writerows(
+                results
+            )
+
+    # ========================================================
     # FINAL SUMMARY
     # ========================================================
 
     print("\n")
     print("=" * 80)
-
     print(
         "             TRAINING SUMMARY"
     )
-
     print("=" * 80)
 
     print(
         f"\nSuccessful: "
-        f"{len(successful)}/{len(STOCKS)}"
+        f"{len(successful)}"
     )
 
     for stock in successful:
 
         print(
-            f"   ✓ {stock}"
+            f"   [OK] {stock}"
         )
 
     if failed:
 
         print(
             f"\nFailed: "
-            f"{len(failed)}/{len(STOCKS)}"
+            f"{len(failed)}"
         )
 
         for stock in failed:
 
             print(
-                f"   ✗ {stock}"
+                f"   [FAILED] {stock}"
             )
 
     print("\n")
@@ -659,11 +889,9 @@ def train_all_stocks():
 
     print("\n")
     print("=" * 80)
-
     print(
-        "       MULTI-STOCK TRAINING FINISHED 🚀"
+        "       MULTI-STOCK TRAINING FINISHED"
     )
-
     print("=" * 80)
 
 

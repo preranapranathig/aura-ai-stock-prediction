@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+Apple,trained,models\apple_lstm_model.keras,22,10.151561613242947,13.165603089212947,3.561362829369251,0.7339962738930954,0.002753910608589649,0.005211534444242716

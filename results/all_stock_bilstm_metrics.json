@@ -1,0 +1,149 @@
+[
+    {
+        "stock": "tcs",
+        "status": "trained",
+        "model": "models\\tcs_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 44,
+        "MAE": 264.10353474444656,
+        "RMSE": 350.60982327911546,
+        "MAPE": 11.186737043439326,
+        "R2": 0.23562175597453683,
+        "final_training_loss": 0.0037445188499987125,
+        "final_validation_loss": 0.0020184654276818037
+    },
+    {
+        "stock": "infosys",
+        "status": "trained",
+        "model": "models\\infosys_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 44,
+        "MAE": 34.092961935633156,
+        "RMSE": 44.03764320236657,
+        "MAPE": 2.6770334777530036,
+        "R2": 0.9499942640834071,
+        "final_training_loss": 0.0037725598085671663,
+        "final_validation_loss": 0.0017735076835379004
+    },
+    {
+        "stock": "reliance",
+        "status": "trained",
+        "model": "models\\reliance_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 60,
+        "MAE": 20.210740120180198,
+        "RMSE": 25.788155287900278,
+        "MAPE": 1.4426543350608299,
+        "R2": 0.9032470483883912,
+        "final_training_loss": 0.0024333097971975803,
+        "final_validation_loss": 0.002501229988411069
+    },
+    {
+        "stock": "hdfc_bank",
+        "status": "trained",
+        "model": "models\\hdfc_bank_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 25,
+        "MAE": 16.145971975018902,
+        "RMSE": 21.28731923047184,
+        "MAPE": 1.937615506977896,
+        "R2": 0.9527167876004247,
+        "final_training_loss": 0.0034382548183202744,
+        "final_validation_loss": 0.002162344055250287
+    },
+    {
+        "stock": "apple",
+        "status": "trained",
+        "model": "models\\apple_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 48,
+        "MAE": 9.954487210228327,
+        "RMSE": 12.609582314209216,
+        "MAPE": 3.481927070351061,
+        "R2": 0.7559900105504673,
+        "final_training_loss": 0.0023936601355671883,
+        "final_validation_loss": 0.003553439863026142
+    },
+    {
+        "stock": "microsoft",
+        "status": "trained",
+        "model": "models\\microsoft_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 31,
+        "MAE": 18.766446786097795,
+        "RMSE": 22.275247665018938,
+        "MAPE": 4.19351830026027,
+        "R2": 0.8240577683087829,
+        "final_training_loss": 0.0017086667940020561,
+        "final_validation_loss": 0.0065123396925628185
+    },
+    {
+        "stock": "tesla",
+        "status": "trained",
+        "model": "models\\tesla_bilstm_model.keras",
+        "architecture": "BiLSTM",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 13,
+        "MAE": 31.098679557679198,
+        "RMSE": 36.57139057379349,
+        "MAPE": 7.41999724598147,
+        "R2": 0.21982474281118713,
+        "final_training_loss": 0.003789091482758522,
+        "final_validation_loss": 0.004107186570763588
+    }
+]

@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+HDFC Bank,trained,models\hdfc_bank_lstm_model.keras,36,15.710935628882904,19.249394570770647,1.785135254536729,0.9613366769672017,0.0027330375742167234,0.008095428347587585

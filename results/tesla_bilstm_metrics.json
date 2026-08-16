@@ -1,0 +1,21 @@
+{
+    "stock": "tesla",
+    "status": "trained",
+    "model": "models\\tesla_bilstm_model.keras",
+    "architecture": "BiLSTM",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume"
+    ],
+    "sequence_length": 60,
+    "epochs_completed": 13,
+    "MAE": 31.098679557679198,
+    "RMSE": 36.57139057379349,
+    "MAPE": 7.41999724598147,
+    "R2": 0.21982474281118713,
+    "final_training_loss": 0.003789091482758522,
+    "final_validation_loss": 0.004107186570763588
+}

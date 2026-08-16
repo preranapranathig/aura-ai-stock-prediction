@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+TCS,trained,models/tcs_bilstm_model.keras,50,142.6863236781576,183.97158028678246,5.914363842874087,0.7895438430851551,0.003655634820461273,0.0019946270622313023

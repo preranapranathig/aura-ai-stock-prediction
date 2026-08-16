@@ -1,0 +1,2 @@
+stock,status,model,epochs_completed,MAE,RMSE,MAPE,R2,final_training_loss,final_validation_loss
+Microsoft,trained,models\microsoft_lstm_model.keras,24,14.783156188827064,21.08592091218779,3.406960179407001,0.8423441246919754,0.002373242750763893,0.005795890465378761

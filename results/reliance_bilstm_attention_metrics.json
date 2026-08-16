@@ -1,0 +1,15 @@
+{
+    "stock": "reliance",
+    "status": "trained",
+    "model": "models\\reliance_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 14,
+    "MAE": 67.61794650170111,
+    "RMSE": 74.29305598910997,
+    "MAPE": 4.856888512486764,
+    "R2": 0.1969915497085044,
+    "final_training_loss": 0.016570543870329857,
+    "final_validation_loss": 0.02050347812473774
+}

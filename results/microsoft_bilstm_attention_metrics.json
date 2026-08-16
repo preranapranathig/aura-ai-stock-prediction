@@ -1,0 +1,15 @@
+{
+    "stock": "microsoft",
+    "status": "trained",
+    "model": "models\\microsoft_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 15,
+    "MAE": 37.082326699063124,
+    "RMSE": 42.405211327026926,
+    "MAPE": 8.558558052329095,
+    "R2": 0.36237772970299886,
+    "final_training_loss": 0.009079989045858383,
+    "final_validation_loss": 0.03167623281478882
+}

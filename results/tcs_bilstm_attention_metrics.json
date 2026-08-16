@@ -1,0 +1,15 @@
+{
+    "stock": "tcs",
+    "status": "trained",
+    "model": "models\\tcs_bilstm_attention_model.keras",
+    "architecture": "BiLSTM + Attention",
+    "features": "Open, High, Low, Close, Volume",
+    "sequence_length": 60,
+    "epochs_completed": 80,
+    "MAE": 469.51119860300577,
+    "RMSE": 599.6222665173234,
+    "MAPE": 19.70638550181267,
+    "R2": -1.2357109873897385,
+    "final_training_loss": 0.01002599485218525,
+    "final_validation_loss": 0.008804615586996078
+}

@@ -1,0 +1,149 @@
+[
+    {
+        "stock": "tcs",
+        "status": "trained",
+        "model": "models\\tcs_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 83,
+        "MAE": 541.4407704058422,
+        "RMSE": 685.9698729179864,
+        "MAPE": 22.677834731574702,
+        "R2": -1.925972516770282,
+        "final_training_loss": 0.013161486014723778,
+        "final_validation_loss": 0.020132839679718018
+    },
+    {
+        "stock": "infosys",
+        "status": "trained",
+        "model": "models\\infosys_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 14,
+        "MAE": 137.05923327097452,
+        "RMSE": 165.39370401410878,
+        "MAPE": 11.0072955972883,
+        "R2": 0.2946419406330376,
+        "final_training_loss": 0.032761890441179276,
+        "final_validation_loss": 0.02942141890525818
+    },
+    {
+        "stock": "reliance",
+        "status": "trained",
+        "model": "models\\reliance_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 12,
+        "MAE": 70.65265483240927,
+        "RMSE": 78.11583420344219,
+        "MAPE": 5.073463241413486,
+        "R2": 0.11222723166657012,
+        "final_training_loss": 0.019200628623366356,
+        "final_validation_loss": 0.026442458853125572
+    },
+    {
+        "stock": "hdfc_bank",
+        "status": "trained",
+        "model": "models\\hdfc_bank_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 11,
+        "MAE": 53.056488037109375,
+        "RMSE": 67.8801982731136,
+        "MAPE": 6.468829209303201,
+        "R2": 0.5192146420395216,
+        "final_training_loss": 0.014961756765842438,
+        "final_validation_loss": 0.03761306032538414
+    },
+    {
+        "stock": "apple",
+        "status": "trained",
+        "model": "models\\apple_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 42,
+        "MAE": 26.714432973710316,
+        "RMSE": 31.234396157517782,
+        "MAPE": 9.456956350877032,
+        "R2": -0.4971745384289892,
+        "final_training_loss": 0.012961187399923801,
+        "final_validation_loss": 0.01262002531439066
+    },
+    {
+        "stock": "microsoft",
+        "status": "trained",
+        "model": "models\\microsoft_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 15,
+        "MAE": 33.988717979643916,
+        "RMSE": 42.0312990651099,
+        "MAPE": 8.125481500783918,
+        "R2": 0.37357275289017544,
+        "final_training_loss": 0.00822083093225956,
+        "final_validation_loss": 0.031797368079423904
+    },
+    {
+        "stock": "tesla",
+        "status": "trained",
+        "model": "models\\tesla_lstm_attention_model.keras",
+        "architecture": "LSTM + Attention",
+        "features": [
+            "Open",
+            "High",
+            "Low",
+            "Close",
+            "Volume"
+        ],
+        "sequence_length": 60,
+        "epochs_completed": 37,
+        "MAE": 51.44203210255457,
+        "RMSE": 59.75436556011545,
+        "MAPE": 12.362731652703413,
+        "R2": -1.0828044839159312,
+        "final_training_loss": 0.013829787261784077,
+        "final_validation_loss": 0.022117789834737778
+    }
+]

@@ -10,6 +10,7 @@ import hmac
 import secrets
 import re
 import html
+import json
 # ============================================================
 # PATH CONFIGURATION
 # ============================================================
@@ -22,6 +23,7 @@ if str(SRC_DIR) not in sys.path:
 
 from live_prediction import generate_live_prediction
 from stock_config import STOCKS
+
 
 
 # ============================================================
@@ -557,363 +559,11 @@ header[data-testid="stHeader"] {
         font-size: 1.35rem;
     }
 }
-/* ================================
-   TOP RIGHT PROFILE BUTTON
-   ================================ */
-
-div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(3) div[data-testid="stPopover"] > button {
-    width: 58px !important;
-    height: 58px !important;
-    min-width: 58px !important;
-    min-height: 58px !important;
-
-    padding: 0 !important;
-
-    border-radius: 50% !important;
-
-    background: #263143 !important;
-
-    border: 1px solid rgba(255,255,255,0.20) !important;
-
-    color: #f4f7fb !important;
-
-    font-size: 18px !important;
-    font-weight: 700 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    position: relative !important;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.30) !important;
-}
-
-/* Online green dot */
-
-div[data-testid="stPopover"] > button::after {
-    content: "";
-
-    position: absolute;
-
-    width: 11px;
-    height: 11px;
-
-    right: 1px;
-    bottom: 1px;
-
-    background: #22c55e;
-
-    border: 2px solid #07111c;
-
-    border-radius: 50%;
-}
-
-/* =====================================================
-   AURA AI - NOTIFICATION BELL
-   ===================================================== */
-
-/* Bell only — no circle */
-div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(2) [data-testid="stPopover"] > button {
-    width: auto !important;
-    height: auto !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    max-width: none !important;
-    max-height: none !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-
-    transform: none !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* Bell itself */
-div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(2) [data-testid="stPopover"] > button p {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 20px !important;
-    line-height: 1 !important;
-}
-
-/* Bell hover */
-div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(2) [data-testid="stPopover"] > button:hover {
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-}
-/* ==========================================================
-   AURA AI — FINAL HEADER FIX
-   Force Streamlit popovers to look like pure custom controls
-   ========================================================== */
-
-/* ---------- REMOVE STREAMLIT POPOVER ARROWS ---------- */
-
-div[data-testid="stPopover"] > button::after {
-    display: none !important;
-    content: none !important;
-}
-
-div[data-testid="stPopover"] > button svg,
-div[data-testid="stPopover"] > button [data-testid="stIconMaterial"],
-div[data-testid="stPopover"] > button [data-testid="stIcon"],
-div[data-testid="stPopover"] > button span[aria-hidden="true"] {
-    display: none !important;
-    visibility: hidden !important;
-}
-
-
-/* ==========================================================
-   AI ENGINE ONLINE
-   ========================================================== */
-
-div[data-testid="column"]:has(.aura-engine-marker)
-div[data-testid="stPopover"] > button {
-    width: 142px !important;
-    min-width: 142px !important;
-    height: 42px !important;
-    min-height: 42px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: 1px solid rgba(34,211,238,.22) !important;
-    border-radius: 999px !important;
-
-    background: rgba(7,15,24,.65) !important;
-    box-shadow: none !important;
-
-    color: #67e8f9 !important;
-    font-size: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* Re-create the visible text ourselves */
-div[data-testid="column"]:has(.aura-engine-marker)
-div[data-testid="stPopover"] > button::before {
-    content: "●  AI ENGINE ONLINE" !important;
-
-    display: block !important;
-
-    color: #67e8f9 !important;
-    font-family: "Inter", "Segoe UI", sans-serif !important;
-    font-size: 10px !important;
-    font-weight: 750 !important;
-    letter-spacing: .03em !important;
-}
-
-div[data-testid="column"]:has(.aura-engine-marker)
-div[data-testid="stPopover"] > button:hover {
-    border-color: rgba(34,211,238,.50) !important;
-    background: rgba(11,28,40,.85) !important;
-}
-
-
-/* ==========================================================
-   BELL
-   NO BOX
-   NO BORDER
-   NO ARROW
-   ========================================================== */
-
-div[data-testid="column"]:has(.aura-bell-marker)
-div[data-testid="stPopover"] > button {
-    width: 42px !important;
-    min-width: 42px !important;
-
-    height: 42px !important;
-    min-height: 42px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: none !important;
-    outline: none !important;
-    border-radius: 0 !important;
-
-    background: transparent !important;
-    box-shadow: none !important;
-
-    font-size: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* Create the bell ourselves */
-div[data-testid="column"]:has(.aura-bell-marker)
-div[data-testid="stPopover"] > button::before {
-    content: "🔔" !important;
-
-    display: block !important;
-
-    font-size: 20px !important;
-    line-height: 1 !important;
-
-    filter: grayscale(1) brightness(1.8);
-}
-
-div[data-testid="column"]:has(.aura-bell-marker)
-div[data-testid="stPopover"] > button:hover {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    transform: scale(1.08) !important;
-}
-
-
-/* ==========================================================
-   APPEARANCE / SUN
-   NO BOX
-   NO ARROW
-   ========================================================== */
-
-div[data-testid="column"]:has(.aura-sun-marker)
-div[data-testid="stPopover"] > button {
-    width: 42px !important;
-    min-width: 42px !important;
-
-    height: 42px !important;
-    min-height: 42px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border: none !important;
-    outline: none !important;
-    border-radius: 0 !important;
-
-    background: transparent !important;
-    box-shadow: none !important;
-
-    font-size: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-div[data-testid="column"]:has(.aura-sun-marker)
-div[data-testid="stPopover"] > button::before {
-    content: "☼" !important;
-
-    display: block !important;
-
-    color: #e8eef7 !important;
-    font-size: 23px !important;
-    line-height: 1 !important;
-}
-
-div[data-testid="column"]:has(.aura-sun-marker)
-div[data-testid="stPopover"] > button:hover {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    transform: scale(1.08) !important;
-}
-
-
-/* ==========================================================
-   PROFILE
-   CIRCLE ONLY
-   H INSIDE
-   GREEN ONLINE DOT
-   NO ARROW
-   ========================================================== */
-
-div[data-testid="column"]:has(.aura-profile-marker)
-div[data-testid="stPopover"] > button {
-    position: relative !important;
-
-    width: 58px !important;
-    min-width: 58px !important;
-    max-width: 58px !important;
-
-    height: 58px !important;
-    min-height: 58px !important;
-    max-height: 58px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    border-radius: 50% !important;
-
-    border: 1px solid rgba(255,255,255,.20) !important;
-
-    background: #263143 !important;
-
-    box-shadow: 0 4px 16px rgba(0,0,0,.30) !important;
-
-    font-size: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* Re-create profile initial */
-div[data-testid="column"]:has(.aura-profile-marker)
-div[data-testid="stPopover"] > button::before {
-    content: "H" !important;
-
-    display: block !important;
-
-    color: #f4f7fb !important;
-
-    font-family: "Inter", "Segoe UI", sans-serif !important;
-    font-size: 18px !important;
-    font-weight: 800 !important;
-
-    line-height: 1 !important;
-}
-
-/* Green online dot */
-div[data-testid="column"]:has(.aura-profile-marker)
-div[data-testid="stPopover"] > button::after {
-    content: "" !important;
-
-    display: block !important;
-
-    position: absolute !important;
-
-    width: 10px !important;
-    height: 10px !important;
-
-    right: 1px !important;
-    bottom: 1px !important;
-
-    background: #22c55e !important;
-
-    border: 2px solid #07111c !important;
-
-    border-radius: 50% !important;
-}
-
-/* Profile hover */
-div[data-testid="column"]:has(.aura-profile-marker)
-div[data-testid="stPopover"] > button:hover {
-    background: #303b50 !important;
-
-    border-color: rgba(34,211,238,.35) !important;
-
-    box-shadow: 0 0 22px rgba(34,211,238,.10) !important;
-}
-
 </style>
 """, unsafe_allow_html=True)
+
+
+
 
 # ============================================================
 # HELPER FUNCTIONS
@@ -1111,6 +761,156 @@ def create_historical_chart(df):
         return None
 
 
+def get_last_data_date(df):
+    """Return the most recent Date in a stock dataframe, or None."""
+    if df is None or "Date" not in df.columns:
+        return None
+    valid_dates = pd.to_datetime(df["Date"], errors="coerce").dropna()
+    if not len(valid_dates):
+        return None
+    return valid_dates.max()
+
+
+def is_data_stale(last_date, max_stale_trading_days=1):
+    """True if last_date is more than max_stale_trading_days business days
+    behind today. Weekends are not counted as staleness, so a Friday close
+    on a Saturday/Sunday is NOT flagged as stale."""
+    if last_date is None or pd.isna(last_date):
+        return True
+    today = pd.Timestamp.now().normalize()
+    if last_date.normalize() >= today:
+        return False
+    missing_bdays = pd.bdate_range(start=last_date + pd.Timedelta(days=1), end=today)
+    return len(missing_bdays) > max_stale_trading_days
+
+
+def get_stock_save_path(stock_name):
+    """Where a refreshed CSV should be written. Reuses an existing file's
+    location if one exists, otherwise defaults to data/stocks/<name>.csv."""
+    existing = get_stock_file(stock_name)
+    if existing is not None:
+        return existing
+    filename = stock_name.lower().replace(" ", "_")
+    return BASE_DIR / "data" / "stocks" / f"{filename}.csv"
+
+
+def refresh_stock_data(stock_name, ticker, existing_df):
+    """Fetch any missing recent rows via yfinance and merge them into
+    existing_df. Returns (updated_df, error_message). error_message is
+    None on success (including 'nothing new to fetch')."""
+    try:
+        import yfinance as yf
+    except ImportError:
+        return existing_df, "yfinance is not installed. Run: pip install yfinance"
+
+    try:
+        last_date = get_last_data_date(existing_df)
+        start = (last_date + pd.Timedelta(days=1)).strftime("%Y-%m-%d") if last_date is not None else None
+
+        fresh = yf.download(ticker, start=start, progress=False, auto_adjust=False)
+        if fresh is None or fresh.empty:
+            return existing_df, None  # already up to date, not an error
+
+        fresh = fresh.reset_index()
+        if isinstance(fresh.columns, pd.MultiIndex):
+            fresh.columns = [c[0] if isinstance(c, tuple) else c for c in fresh.columns]
+        keep_cols = [c for c in ["Date", "Open", "High", "Low", "Close", "Volume"] if c in fresh.columns]
+        fresh = fresh[keep_cols]
+        fresh["Date"] = pd.to_datetime(fresh["Date"])
+
+        if existing_df is not None and len(existing_df):
+            merged = existing_df.copy()
+            merged["Date"] = pd.to_datetime(merged["Date"])
+            merged = pd.concat([merged, fresh], ignore_index=True)
+            merged = merged.drop_duplicates(subset="Date", keep="last").sort_values("Date")
+        else:
+            merged = fresh.sort_values("Date")
+
+        return merged.reset_index(drop=True), None
+    except Exception as exc:
+        return existing_df, str(exc)
+
+
+def save_stock_data(stock_name, df):
+    """Persist a refreshed dataframe back to its CSV file."""
+    path = get_stock_save_path(stock_name)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(path, index=False)
+    return path
+    """Heuristic confidence score derived from uncertainty percentage.
+    This is NOT a calibrated statistic — it's a simple, transparent
+    mapping so the dashboard has something meaningful to show. Replace
+    with a real backtested R² / coverage score once available."""
+    conf = 100 - (uncertainty_pct * 6)
+    return max(50.0, min(99.0, conf))
+
+
+def get_confidence_pct(uncertainty_pct):
+    """Heuristic confidence score derived from uncertainty percentage.
+    This is NOT a calibrated statistic — it's a simple, transparent
+    mapping so the dashboard has something meaningful to show. Replace
+    with a real backtested R² / coverage score once available."""
+    conf = 100 - (uncertainty_pct * 6)
+    return max(50.0, min(99.0, conf))
+
+
+def render_confidence_donut(value_pct, label="CONFIDENCE"):
+    import plotly.graph_objects as go
+    value_pct = max(0.0, min(100.0, value_pct))
+    fig = go.Figure(data=[go.Pie(
+        values=[value_pct, 100 - value_pct],
+        hole=0.76,
+        marker=dict(colors=["#22d3ee", "rgba(255,255,255,0.06)"]),
+        textinfo="none",
+        sort=False,
+        direction="clockwise",
+    )])
+    fig.update_layout(
+        showlegend=False,
+        margin=dict(l=0, r=0, t=0, b=0),
+        height=190,
+        paper_bgcolor="rgba(0,0,0,0)",
+        annotations=[
+            dict(text=f"{value_pct:.1f}%", x=0.5, y=0.54, font=dict(size=26, color="#f8fafc"), showarrow=False),
+            dict(text=label, x=0.5, y=0.38, font=dict(size=10, color="#718096"), showarrow=False),
+        ],
+    )
+    return fig
+
+
+def render_sparkline(values, color="#22d3ee"):
+    import plotly.graph_objects as go
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        y=values, mode="lines", line=dict(width=2.4, color=color),
+        fill="tozeroy", fillcolor="rgba(34,211,238,0.10)",
+    ))
+    fig.update_layout(
+        height=70, margin=dict(l=0, r=0, t=0, b=0),
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(visible=False), yaxis=dict(visible=False),
+    )
+    return fig
+
+
+def get_timeframe_days(timeframe):
+    return {"1W": 7, "1M": 30, "3M": 90, "1Y": 365, "All": None}.get(timeframe, 90)
+
+
+def find_predictions_file(stock_name):
+    """Optional backtest results file: results/<stock>_predictions.csv with
+    columns Date, Actual, Predicted (and optionally Upper, Lower)."""
+    filename = stock_name.lower().replace(" ", "_")
+    candidates = [
+        BASE_DIR / "results" / f"{filename}_predictions.csv",
+        BASE_DIR / "results" / f"{filename}_backtest.csv",
+    ]
+    for path in candidates:
+        if path.exists():
+            return path
+    return None
+
+
 
 
 # ============================================================
@@ -1119,9 +919,6 @@ def create_historical_chart(df):
 # ============================================================
 
 # Persistent local SQLite user store.
-# This fixes the previous problem where AUTH_USERS was only an
-# in-memory dictionary and all newly-created users disappeared
-# whenever Streamlit restarted/reran the app.
 import sqlite3
 
 AUTH_DB = BASE_DIR / "data" / "aura_users.db"
@@ -1152,7 +949,6 @@ def init_auth_db():
         )
         conn.commit()
 
-        # Keep the original demo accounts available.
         demo_users = [
             (
                 "admin",
@@ -1192,7 +988,6 @@ init_auth_db()
 
 
 def hash_password(password, salt=None):
-    """Secure PBKDF2 password hash for the local prototype."""
     if salt is None:
         salt = secrets.token_bytes(16)
 
@@ -1207,7 +1002,6 @@ def hash_password(password, salt=None):
 
 
 def verify_password_hash(password, stored_hash):
-    """Verify PBKDF2 hashes and legacy SHA-256 demo hashes."""
     if "$" in str(stored_hash):
         try:
             salt_hex, digest_hex = str(stored_hash).split("$", 1)
@@ -1224,7 +1018,6 @@ def verify_password_hash(password, stored_hash):
 
         return hmac.compare_digest(candidate, digest_hex)
 
-    # Legacy SHA-256 demo accounts.
     candidate = hashlib.sha256(
         str(password).encode("utf-8")
     ).hexdigest()
@@ -1233,7 +1026,6 @@ def verify_password_hash(password, stored_hash):
 
 
 def get_user(username):
-    """Return a user dictionary from the persistent database."""
     username_key = str(username).strip().lower()
     if not username_key:
         return None
@@ -1261,7 +1053,6 @@ def verify_password(username, password):
 
 
 def create_user(username, password, display_name, email, phone):
-    """Create a persistent local user profile."""
     username = str(username).strip().lower()
     email = str(email).strip().lower()
 
@@ -1319,7 +1110,6 @@ def create_user(username, password, display_name, email, phone):
 
 
 def update_user_profile(username, display_name, email, phone):
-    """Persist profile changes for the logged-in user."""
     username = str(username).strip().lower()
     email = str(email).strip().lower()
     display_name = str(display_name).strip()
@@ -1353,7 +1143,6 @@ def update_user_profile(username, display_name, email, phone):
 
 
 def reset_user_password(username, email, new_password):
-    """Reset a password after matching username and registered email."""
     username_key = str(username).strip().lower()
     email_key = str(email).strip().lower()
 
@@ -1404,17 +1193,12 @@ def logout():
 
 def render_login_page():
     st.markdown(
-        """
-        <div class="auth-card">
-            <div class="auth-logo">AI</div>
-            <div class="auth-title">AURA AI</div>
-            <div class="auth-subtitle">
-                Adaptive Uncertainty • Risk • Analytics
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    '<div class="aura-header-wrap" style="text-align:center;padding-top:40px;margin-bottom:8px;">'
+    '<div class="brand" style="justify-content:center;">AURA AI</div>'
+    '<div class="brand-subtitle">ADAPTIVE UNCERTAINTY • RISK • ANALYTICS</div>'
+    '</div>',
+    unsafe_allow_html=True,
+)
 
     _, center, _ = st.columns([1, 2, 1])
 
@@ -1563,7 +1347,6 @@ def render_signup():
         if success:
             st.success(message)
 
-            # Log the new user in immediately.
             st.session_state.authenticated = True
             st.session_state.auth_username = (
                 str(username).strip().lower()
@@ -1715,7 +1498,6 @@ def require_authentication():
         render_login_page()
         return False
 
-    # Safety check: if the user was deleted/corrupted, return to login.
     if not get_user(st.session_state.get("auth_username")):
         logout()
         render_login_page()
@@ -1773,9 +1555,6 @@ def get_company_logo_url(stock_name, ticker):
     domain = COMPANY_LOGO_DOMAINS.get(ticker_key) or COMPANY_LOGO_DOMAINS.get(name_key)
 
     if domain:
-        # Hunter provides company/brand logos by domain.
-        # Unlike Google's favicon service, this is intended to return
-        # the company's actual brand logo rather than a generic favicon.
         return f"https://logos.hunter.io/{domain}"
     return None
 
@@ -1815,12 +1594,6 @@ st.markdown(r"""
 <style>
 .aura-header-wrap { padding-top:4px; }
 
-/* ==========================================================
-   REFERENCE-STYLE TOP ACTION BAR
-   - No chevrons/arrows on icon buttons
-   - Bell and sun are icon-only, never boxed
-   - Profile is a large circular initial with online dot
-   ========================================================== */
 .aura-header-actions {
     display:flex!important;
     align-items:center!important;
@@ -1830,148 +1603,138 @@ st.markdown(r"""
 }
 
 /* ==========================================================
-   IMPORTANT: remove Streamlit's native popover button chrome
-   from the top-right controls. This is intentionally broad
-   because Streamlit's DOM wrapper can change between versions.
+   AURA HEADER ICONS — RELIABLE FIX
+   Each icon is wrapped in st.container(key="...") in the Python
+   code below, which gives Streamlit a REAL wrapping element with
+   a stable class: .st-key-<name>. That element genuinely contains
+   the popover, unlike separate st.markdown() marker spans, so
+   these selectors reliably match.
    ========================================================== */
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button,
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] > button,
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button[data-testid="stPopoverButton"] {
-    box-shadow:none!important;
-    outline:none!important;
-    font-family:inherit!important;
+
+/* Remove every native chevron/caret Streamlit adds to popover buttons */
+.st-key-aura_engine_wrap [data-testid="stPopover"] button svg,
+.st-key-aura_bell_wrap [data-testid="stPopover"] button svg,
+.st-key-aura_sun_wrap [data-testid="stPopover"] button svg,
+.st-key-aura_profile_wrap [data-testid="stPopover"] button svg,
+.st-key-aura_engine_wrap [data-testid="stPopover"] button [data-testid="stIconMaterial"],
+.st-key-aura_bell_wrap [data-testid="stPopover"] button [data-testid="stIconMaterial"],
+.st-key-aura_sun_wrap [data-testid="stPopover"] button [data-testid="stIconMaterial"],
+.st-key-aura_profile_wrap [data-testid="stPopover"] button [data-testid="stIconMaterial"] {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
 }
 
-/* Kill EVERY native chevron/icon that Streamlit adds to popovers. */
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button svg,
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button [data-testid="stIconMaterial"],
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button [data-testid="stIcon"],
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button span[data-testid="stIconMaterial"] {
-    display:none!important;
-    visibility:hidden!important;
-    width:0!important;
-    height:0!important;
-    margin:0!important;
-    padding:0!important;
+/* AI ENGINE ONLINE — pill, unchanged look */
+.st-key-aura_engine_wrap [data-testid="stPopover"] button {
+    width: 142px !important;
+    min-width: 142px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 14px !important;
+    border: 1px solid rgba(34,211,238,.20) !important;
+    border-radius: 999px !important;
+    background: rgba(7,15,24,.58) !important;
+    color: #67e8f9 !important;
+    font-size: .68rem !important;
+    font-weight: 750 !important;
+    letter-spacing: .03em !important;
+}
+.st-key-aura_engine_wrap [data-testid="stPopover"] button:hover {
+    border-color: rgba(34,211,238,.45) !important;
+    background: rgba(11,28,40,.85) !important;
 }
 
-/* ---------------- AI ENGINE ONLINE ---------------- */
-div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] button,
-div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] > button {
-    width:142px!important;
-    min-width:142px!important;
-    height:42px!important;
-    min-height:42px!important;
-    padding:0 14px!important;
-    border:1px solid rgba(34,211,238,.20)!important;
-    border-radius:999px!important;
-    background:rgba(7,15,24,.58)!important;
-    color:#67e8f9!important;
-    font-size:.68rem!important;
-    font-weight:750!important;
-    letter-spacing:.03em!important;
+/* BELL — icon only, no box, no border, no arrow */
+.st-key-aura_bell_wrap [data-testid="stPopover"] button {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #e8eef7 !important;
+    font-size: 21px !important;
+    font-weight: 400 !important;
 }
-div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] button:hover,
-div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] > button:hover {
-    border-color:rgba(34,211,238,.45)!important;
-    background:rgba(11,28,40,.85)!important;
-}
-
-/* ---------------- BELL: ICON ONLY ---------------- */
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] button,
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] > button,
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] button[data-testid="stPopoverButton"] {
-    width:42px!important;
-    min-width:42px!important;
-    height:42px!important;
-    min-height:42px!important;
-    padding:0!important;
-    margin:0!important;
-    border:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    color:#e8eef7!important;
-    font-size:21px!important;
-    font-weight:400!important;
-}
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] button:hover,
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] > button:hover {
-    border:0!important;
-    background:transparent!important;
-    color:#67e8f9!important;
-    transform:scale(1.06);
+.st-key-aura_bell_wrap [data-testid="stPopover"] button:hover {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #67e8f9 !important;
+    transform: scale(1.08);
 }
 
-/* ---------------- SUN: ICON ONLY ---------------- */
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] button,
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] > button,
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] button[data-testid="stPopoverButton"] {
-    width:42px!important;
-    min-width:42px!important;
-    height:42px!important;
-    min-height:42px!important;
-    padding:0!important;
-    margin:0!important;
-    border:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    color:#e8eef7!important;
-    font-size:22px!important;
-    font-weight:400!important;
+/* SUN / APPEARANCE — icon only, no box, no arrow */
+.st-key-aura_sun_wrap [data-testid="stPopover"] button {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #e8eef7 !important;
+    font-size: 22px !important;
+    font-weight: 400 !important;
 }
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] button:hover,
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] > button:hover {
-    border:0!important;
-    background:transparent!important;
-    color:#67e8f9!important;
-    transform:scale(1.06);
-}
-
-/* ---------------- PROFILE: CIRCLE ONLY ---------------- */
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button,
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] > button,
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button[data-testid="stPopoverButton"] {
-    position:relative!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    width:58px!important;
-    min-width:58px!important;
-    max-width:58px!important;
-    height:58px!important;
-    min-height:58px!important;
-    max-height:58px!important;
-    padding:0!important;
-    margin:0!important;
-    border-radius:50%!important;
-    border:1px solid rgba(255,255,255,.18)!important;
-    background:#263143!important;
-    color:#f4f7fb!important;
-    font-size:18px!important;
-    font-weight:800!important;
-    line-height:1!important;
-    box-shadow:0 4px 16px rgba(0,0,0,.28)!important;
-}
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button:hover,
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] > button:hover {
-    background:#303b50!important;
-    border-color:rgba(34,211,238,.35)!important;
-    box-shadow:0 0 22px rgba(34,211,238,.08)!important;
+.st-key-aura_sun_wrap [data-testid="stPopover"] button:hover {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #67e8f9 !important;
+    transform: scale(1.08);
 }
 
-/* green online dot on the profile circle */
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button::after,
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] > button::after {
-    content:""!important;
-    position:absolute!important;
-    width:10px!important;
-    height:10px!important;
-    right:1px!important;
-    bottom:1px!important;
-    background:#22c55e!important;
-    border:2px solid #07111c!important;
-    border-radius:50%!important;
-    display:block!important;
+/* PROFILE — perfect circle with initial + green online dot, no arrow */
+.st-key-aura_profile_wrap [data-testid="stPopover"] button {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+    background: #263143 !important;
+    color: #f4f7fb !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,.28) !important;
+}
+.st-key-aura_profile_wrap [data-testid="stPopover"] button:hover {
+    background: #303b50 !important;
+    border-color: rgba(34,211,238,.35) !important;
+    box-shadow: 0 0 22px rgba(34,211,238,.08) !important;
+}
+.st-key-aura_profile_wrap [data-testid="stPopover"] button::after {
+    content: "" !important;
+    position: absolute !important;
+    width: 10px !important;
+    height: 10px !important;
+    right: 1px !important;
+    bottom: 1px !important;
+    background: #22c55e !important;
+    border: 2px solid #07111c !important;
+    border-radius: 50% !important;
+    display: block !important;
 }
 
 /* Popover panels */
@@ -2029,112 +1792,19 @@ div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"]
 .aura-setting-value { color:#718096; font-size:.72rem; }
 
 @media (max-width:900px) {
-    div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] button,
-    div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] > button {
+    .st-key-aura_engine_wrap [data-testid="stPopover"] button {
         width:120px!important;
         min-width:120px!important;
         font-size:.61rem!important;
     }
-    div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button,
-    div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] > button {
-        width:52px!important;
-        height:52px!important;
-        min-width:52px!important;
-        min-height:52px!important;
+    .st-key-aura_profile_wrap [data-testid="stPopover"] button {
+        width:42px!important;
+        height:42px!important;
+        min-width:42px!important;
+        min-height:42px!important;
     }
 }
 
-/* ==========================================================
-   FINAL TOP-HEADER OVERRIDE — TARGET THE ACTUAL STREAMLIT COLUMN
-   The earlier .aura-bell/.aura-profile wrappers are siblings of
-   Streamlit widgets, not their parents. These selectors use :has()
-   to target the real column that contains each popover.
-   ========================================================== */
-
-/* Remove native popover caret/arrow ONLY from the four top controls. */
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button svg,
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button [data-testid="stIconMaterial"],
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button [data-testid="stIcon"],
-div[data-testid="column"]:has(.aura-top-marker) div[data-testid="stPopover"] button span[aria-hidden="true"] {
-    display:none!important;
-    visibility:hidden!important;
-    width:0!important;
-    height:0!important;
-    margin:0!important;
-    padding:0!important;
-}
-
-/* Bell: absolutely no box, border, background, or arrow. */
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] button {
-    width:42px!important; min-width:42px!important; max-width:42px!important;
-    height:42px!important; min-height:42px!important; max-height:42px!important;
-    padding:0!important; margin:0!important;
-    border:0!important; outline:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    color:#e8eef7!important;
-    font-size:21px!important;
-}
-div[data-testid="column"]:has(.aura-bell-marker) div[data-testid="stPopover"] button:hover {
-    border:0!important; background:transparent!important; box-shadow:none!important;
-    color:#67e8f9!important; transform:scale(1.08);
-}
-
-/* Sun: icon only, no box and no arrow. */
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] button {
-    width:42px!important; min-width:42px!important; max-width:42px!important;
-    height:42px!important; min-height:42px!important; max-height:42px!important;
-    padding:0!important; margin:0!important;
-    border:0!important; outline:0!important;
-    border-radius:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    color:#e8eef7!important;
-    font-size:22px!important;
-}
-div[data-testid="column"]:has(.aura-sun-marker) div[data-testid="stPopover"] button:hover {
-    border:0!important; background:transparent!important; box-shadow:none!important;
-    color:#67e8f9!important; transform:scale(1.08);
-}
-
-/* Profile: H is the whole circular button. */
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button {
-    position:relative!important;
-    display:flex!important; align-items:center!important; justify-content:center!important;
-    width:58px!important; min-width:58px!important; max-width:58px!important;
-    height:58px!important; min-height:58px!important; max-height:58px!important;
-    padding:0!important; margin:0!important;
-    border-radius:50%!important;
-    border:1px solid rgba(255,255,255,.18)!important;
-    background:#263143!important;
-    color:#f4f7fb!important;
-    font-size:18px!important; font-weight:800!important; line-height:1!important;
-    box-shadow:0 4px 16px rgba(0,0,0,.28)!important;
-}
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button:hover {
-    border-color:rgba(34,211,238,.35)!important;
-    background:#303b50!important;
-    box-shadow:0 0 22px rgba(34,211,238,.08)!important;
-}
-/* Green online dot. */
-div[data-testid="column"]:has(.aura-profile-marker) div[data-testid="stPopover"] button::after {
-    content:""!important; position:absolute!important;
-    width:10px!important; height:10px!important; right:1px!important; bottom:1px!important;
-    border-radius:50%!important; background:#22c55e!important;
-    border:2px solid #07111c!important; display:block!important;
-}
-
-/* Keep the AI engine as a pill, but remove its native arrow. */
-div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] button {
-    width:142px!important; min-width:142px!important; height:42px!important;
-    padding:0 14px!important; border:1px solid rgba(34,211,238,.20)!important;
-    border-radius:999px!important; background:rgba(7,15,24,.58)!important;
-    color:#67e8f9!important; font-size:.68rem!important; font-weight:750!important;
-}
-
-/* Make sure marker spans never affect layout. */
-.aura-top-marker { display:block!important; width:0!important; height:0!important; overflow:hidden!important; }
 .hero-final { position:relative; overflow:hidden; margin:10px 0 24px; padding:28px 30px; min-height:205px; border-radius:18px; border:1px solid rgba(148,163,184,.12); background:radial-gradient(circle at 88% 45%,rgba(34,211,238,.10),transparent 30%),radial-gradient(circle at 72% 120%,rgba(59,130,246,.08),transparent 35%),linear-gradient(135deg,#0e1623,#080d15 72%); box-shadow:0 22px 55px rgba(0,0,0,.28); }
 .hero-final::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:linear-gradient(180deg,#22d3ee,#3b82f6,#5eead4); }
 .hero-grid { display:grid; grid-template-columns:minmax(0,1fr) 330px; gap:25px; align-items:center; }
@@ -2156,8 +1826,85 @@ div[data-testid="column"]:has(.aura-engine-marker) div[data-testid="stPopover"] 
 .chart-note { margin-top:-8px; margin-bottom:10px; color:#596b80; font-size:.66rem; }
 .final-footer { margin-top:48px; padding:28px 12px 10px; text-align:center; color:#536176; font-size:.68rem; line-height:1.7; border-top:1px solid rgba(148,163,184,.08); }
 .final-footer strong { color:#9eacbd; }
-[data-testid="stPopoverBody"] { background:#0b111b!important; border:1px solid rgba(148,163,184,.12)!important; }
 @media (max-width:900px) { .hero-grid{grid-template-columns:1fr;} .hero-visual{display:none;} .hero-final{padding:22px;} .hero-title-final{font-size:1.4rem;} .hero-description{max-width:none;} }
+
+/* =========================================================
+   AURA AI — SIDEBAR BRAND + NAVIGATION
+   ========================================================= */
+.sidebar-brand-row { display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+.sidebar-brand-icon { width:46px; height:46px; min-width:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0d3a4a,#0a1622); border:1px solid rgba(34,211,238,.35); color:#67e8f9; font-weight:900; font-size:1.05rem; box-shadow:0 0 22px rgba(34,211,238,.12); }
+.sidebar-brand-text .brand { font-size:1.14rem; margin-bottom:0; }
+.sidebar-brand-text .brand-subtitle { font-size:.54rem; margin-top:3px; line-height:1.4; }
+.sidebar-nav-title, .sidebar-market-title { color:#68778c; font-size:.64rem; font-weight:800; letter-spacing:1.4px; margin:4px 0 10px 2px; text-transform:uppercase; }
+.sidebar-market-title { margin-top:22px; }
+
+div[data-testid="stSidebar"] [class*="st-key-nav_"] button {
+    justify-content:flex-start !important;
+    text-align:left !important;
+    background:transparent !important;
+    border:1px solid transparent !important;
+    color:#9aa8bb !important;
+    font-weight:650 !important;
+    letter-spacing:.02em !important;
+    box-shadow:none !important;
+    padding-left:14px !important;
+    min-height:40px !important;
+    border-radius:10px !important;
+}
+div[data-testid="stSidebar"] [class*="st-key-nav_"] button:hover {
+    background:rgba(34,211,238,.06) !important;
+    color:#e8eef7 !important;
+}
+
+.status-card { padding:14px 16px; margin-top:16px; background:linear-gradient(145deg,#0e141f,#090d15); border:1px solid rgba(148,163,184,0.11); border-radius:12px; }
+.status-row { display:flex; align-items:center; justify-content:space-between; padding:5px 0; font-size:.72rem; }
+.status-row .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#22c55e; margin-right:6px; box-shadow:0 0 8px rgba(34,197,94,.6); }
+.status-label { color:#e8eef7; font-weight:650; }
+.status-value { color:#718096; }
+
+/* =========================================================
+   AURA AI — PAGE HERO
+   ========================================================= */
+.page-eyebrow { color:#5eead4; font-size:.68rem; font-weight:850; letter-spacing:.14em; text-transform:uppercase; }
+.page-title { margin-top:6px; color:#f8fafc; font-size:1.9rem; font-weight:850; letter-spacing:-.02em; }
+.page-subtitle { margin-top:6px; color:#7f8da1; font-size:.82rem; }
+
+.stat-pill-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:22px; }
+.stat-pill { padding:16px 18px; background:linear-gradient(145deg,#0e1521,#090e16); border:1px solid rgba(148,163,184,.11); border-radius:13px; }
+.stat-pill-label { color:#68778c; font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+.stat-pill-value { margin-top:7px; color:#f8fafc; font-size:1.15rem; font-weight:800; }
+.stat-pill-value.live-dot::before { content:"●"; color:#22c55e; margin-right:6px; font-size:.7rem; }
+@media (max-width:900px) { .stat-pill-row { grid-template-columns:repeat(2,1fr); } }
+
+/* =========================================================
+   AURA AI — DASHBOARD CARDS
+   ========================================================= */
+.dash-card { padding:22px 24px; background:linear-gradient(145deg,#0e1521,#090e16); border:1px solid rgba(148,163,184,.11); border-radius:16px; box-shadow:0 14px 34px rgba(0,0,0,.22); margin-top:22px; }
+.dash-card-title { color:#f8fafc; font-size:.95rem; font-weight:800; }
+.dash-card-sub { margin-top:3px; color:#68778c; font-size:.72rem; }
+.dash-price { margin-top:14px; color:#f8fafc; font-size:1.9rem; font-weight:850; }
+.dash-price-change { margin-left:10px; font-size:.85rem; font-weight:750; }
+.dash-price-change.up { color:#4ade80; }
+.dash-price-change.down { color:#fb7185; }
+
+.summary-row { display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(148,163,184,.08); font-size:.78rem; gap:12px; }
+.summary-row .k { color:#718096; white-space:nowrap; }
+.summary-row .v { color:#e8eef7; font-weight:700; }
+
+.empty-state { padding:26px; text-align:center; color:#65758b; font-size:.78rem; border:1px dashed rgba(148,163,184,.18); border-radius:12px; }
+
+/* Timeframe tab buttons */
+div[data-testid="stHorizontalBlock"] [class*="st-key-tf_"] button {
+    min-height:32px !important;
+    padding:0 10px !important;
+    font-size:.68rem !important;
+    font-weight:750 !important;
+    border-radius:8px !important;
+    background:transparent !important;
+    border:1px solid rgba(148,163,184,.14) !important;
+    color:#8b98ab !important;
+    box-shadow:none !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -2169,6 +1916,9 @@ logged_in_user = get_user(logged_in_username) if logged_in_username else None
 profile_name = (logged_in_user or {}).get("display_name") or logged_in_username or "User"
 profile_initial = profile_name.strip()[0].upper() if profile_name.strip() else "U"
 
+if "page" not in st.session_state:
+    st.session_state.page = "Dashboard"
+
 # ==========================================================
 # HEADER — CLEAN REFERENCE-STYLE ACTION BAR
 # ==========================================================
@@ -2176,10 +1926,10 @@ header_left, header_actions = st.columns([7.7, 2.3], gap="small")
 
 with header_left:
     st.markdown(
-        '<div class="aura-header-wrap">'
-        '<div class="brand">AURA AI</div>'
-        '<div class="brand-subtitle">ADAPTIVE UNCERTAINTY • RISK • ANALYTICS</div>'
-        '</div>',
+        f'<div class="aura-header-wrap">'
+        f'<div class="brand" style="font-size:1.15rem;">AURA AI</div>'
+        f'<div class="brand-subtitle">{html.escape(str(st.session_state.page)).upper()}</div>'
+        f'</div>',
         unsafe_allow_html=True,
     )
 
@@ -2193,178 +1943,204 @@ with header_actions:
     # AI ENGINE ONLINE — clickable status pill, no arrow
     # ------------------------------------------------------
     with engine_col:
-        st.markdown('<div class="aura-engine">', unsafe_allow_html=True)
-        st.markdown('<span class="aura-top-marker aura-engine-marker"></span>', unsafe_allow_html=True)
-        with st.popover("●  AI ENGINE ONLINE", use_container_width=True):
-            st.markdown("### AI Engine")
-            st.success("System online")
-            st.caption(
-                "AURA AI forecasting services are ready. "
-                "The selected stock can be analysed using the trained LSTM "
-                "and Monte Carlo uncertainty engine."
-            )
-            st.markdown("---")
-            st.markdown(
-                f'<div class="aura-setting-row">'
-                f'<span class="aura-setting-label">Model</span>'
-                f'<span class="aura-setting-value">LSTM + MC Dropout</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                f'<div class="aura-setting-row">'
-                f'<span class="aura-setting-label">User</span>'
-                f'<span class="aura-setting-value">{html.escape(profile_name)}</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(key="aura_engine_wrap"):
+            with st.popover("●  AI ENGINE ONLINE", use_container_width=True):
+                st.markdown("### AI Engine")
+                st.success("System online")
+                st.caption(
+                    "AURA AI forecasting services are ready. "
+                    "The selected stock can be analysed using its automatically selected trained model "
+                    "and Monte Carlo uncertainty engine."
+                )
+                st.markdown("---")
+                st.markdown(
+                    f'<div class="aura-setting-row">'
+                    f'<span class="aura-setting-label">Model</span>'
+                    f'<span class="aura-setting-value">Auto Model + MC Dropout</span>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(
+                    f'<div class="aura-setting-row">'
+                    f'<span class="aura-setting-label">User</span>'
+                    f'<span class="aura-setting-value">{html.escape(profile_name)}</span>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
 
     # ------------------------------------------------------
     # NOTIFICATIONS — icon only, clicking opens the panel
     # ------------------------------------------------------
     with bell_col:
-        st.markdown('<div class="aura-bell">', unsafe_allow_html=True)
-        st.markdown('<span class="aura-top-marker aura-bell-marker"></span>', unsafe_allow_html=True)
-        with st.popover("🔔︎", use_container_width=True):
-            # Use a bell character inside the panel; the trigger is
-            # deliberately icon-only so Streamlit does not show a box.
-            st.markdown("### 🔔 Notifications")
-            st.caption("AURA AI system updates")
-            st.markdown("---")
+        with st.container(key="aura_bell_wrap"):
+            with st.popover("🔔", use_container_width=True):
+                st.markdown("### 🔔 Notifications")
+                st.caption("AURA AI system updates")
+                st.markdown("---")
 
-            notifications = st.session_state.get("notifications", [])
-            if not notifications:
-                st.info("No new notifications.")
-            else:
-                for i, note in enumerate(notifications[:6]):
-                    note_type = note.get("type", "UPDATE")
-                    icon = {
-                        "AI SIGNAL": "🟢",
-                        "MARKET": "📈",
-                        "RISK": "⚠️",
-                        "SYSTEM": "◈",
-                    }.get(note_type, "•")
-                    st.markdown(f"**{icon} {note_type}**")
-                    st.write(note.get("message", ""))
-                    st.caption(note.get("time", "Now"))
-                    if i < min(len(notifications), 6) - 1:
-                        st.markdown("---")
-        st.markdown('</div>', unsafe_allow_html=True)
+                notifications = st.session_state.get("notifications", [])
+                if not notifications:
+                    st.info("No new notifications.")
+                else:
+                    for i, note in enumerate(notifications[:6]):
+                        note_type = note.get("type", "UPDATE")
+                        icon = {
+                            "AI SIGNAL": "🟢",
+                            "MARKET": "📈",
+                            "RISK": "⚠️",
+                            "SYSTEM": "◈",
+                        }.get(note_type, "•")
+                        st.markdown(f"**{icon} {note_type}**")
+                        st.write(note.get("message", ""))
+                        st.caption(note.get("time", "Now"))
+                        if i < min(len(notifications), 6) - 1:
+                            st.markdown("---")
 
     # ------------------------------------------------------
     # APPEARANCE — icon only, clicking opens a small panel
     # ------------------------------------------------------
     with sun_col:
-        st.markdown('<div class="aura-sun">', unsafe_allow_html=True)
-        st.markdown('<span class="aura-top-marker aura-sun-marker"></span>', unsafe_allow_html=True)
-        with st.popover("☼", use_container_width=True):
-            st.markdown("### Appearance")
-            st.caption("AURA AI terminal appearance")
-            st.markdown("---")
-            st.markdown(
-                '<div class="aura-setting-row">'
-                '<span class="aura-setting-label">Theme</span>'
-                '<span class="aura-setting-value">Dark Terminal</span>'
-                '</div>',
-                unsafe_allow_html=True,
-            )
-            st.caption("The current dashboard uses the professional dark theme.")
+        with st.container(key="aura_sun_wrap"):
+            with st.popover("☼", use_container_width=True):
+                st.markdown("### Appearance")
+                st.caption("AURA AI terminal appearance")
+                st.markdown("---")
+                st.markdown(
+                    '<div class="aura-setting-row">'
+                    '<span class="aura-setting-label">Theme</span>'
+                    '<span class="aura-setting-value">Dark Terminal</span>'
+                    '</div>',
+                    unsafe_allow_html=True,
+                )
+                st.caption("The current dashboard uses the professional dark theme.")
 
     # ------------------------------------------------------
     # PROFILE — circular initial, clicking opens the profile panel
     # ------------------------------------------------------
     with profile_col:
-        st.markdown('<div class="aura-profile">', unsafe_allow_html=True)
-        st.markdown('<span class="aura-top-marker aura-profile-marker"></span>', unsafe_allow_html=True)
-        with st.popover(profile_initial, use_container_width=True):
-            st.markdown(
-                f'<div style="text-align:center;padding:4px 0 16px;">'
-                f'<div class="aura-profile-avatar-large">'
-                f'{html.escape(profile_initial)}'
-                f'</div>'
-                f'<div class="aura-profile-panel-title">'
-                f'{html.escape(profile_name)}'
-                f'</div>'
-                f'<div class="aura-profile-panel-subtitle">'
-                f'@{html.escape(str(logged_in_username or "user"))}'
-                f'</div>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
+        with st.container(key="aura_profile_wrap"):
+            with st.popover(profile_initial, use_container_width=False):
+                st.markdown(
+                    f'<div style="text-align:center;padding:4px 0 16px;">'
+                    f'<div class="aura-profile-avatar-large">'
+                    f'{html.escape(profile_initial)}'
+                    f'</div>'
+                    f'<div class="aura-profile-panel-title">'
+                    f'{html.escape(profile_name)}'
+                    f'</div>'
+                    f'<div class="aura-profile-panel-subtitle">'
+                    f'@{html.escape(str(logged_in_username or "user"))}'
+                    f'</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
 
-            st.markdown("**PROFILE**")
-            st.caption("Manage your AURA AI account details")
+                st.markdown("**PROFILE**")
+                st.caption("Manage your AURA AI account details")
 
-            with st.form("aura_final_profile_form", clear_on_submit=False):
-                display_name = st.text_input(
-                    "Full Name",
-                    value=logged_in_user.get("display_name", ""),
+                with st.form("aura_final_profile_form", clear_on_submit=False):
+                    display_name = st.text_input(
+                        "Full Name",
+                        value=logged_in_user.get("display_name", ""),
+                    )
+                    email = st.text_input(
+                        "Email Address",
+                        value=logged_in_user.get("email", ""),
+                    )
+                    phone = st.text_input(
+                        "Phone",
+                        value=logged_in_user.get("phone", ""),
+                    )
+                    save_profile = st.form_submit_button(
+                        "SAVE PROFILE",
+                        use_container_width=True,
+                    )
+
+                if save_profile:
+                    success, message = update_user_profile(
+                        logged_in_username,
+                        display_name,
+                        email,
+                        phone,
+                    )
+                    if success:
+                        st.success(message)
+                        st.rerun()
+                    else:
+                        st.error(message)
+
+                st.markdown("---")
+                st.markdown("**SETTINGS**")
+                st.markdown(
+                    '<div class="aura-setting-row">'
+                    '<span class="aura-setting-label">Theme</span>'
+                    '<span class="aura-setting-value">Dark Terminal</span>'
+                    '</div>'
+                    '<div class="aura-setting-row">'
+                    '<span class="aura-setting-label">Notifications</span>'
+                    '<span class="aura-setting-value">Enabled</span>'
+                    '</div>'
+                    '<div class="aura-setting-row">'
+                    '<span class="aura-setting-label">Account</span>'
+                    f'<span class="aura-setting-value">{html.escape(str(logged_in_user.get("role", "User")))}</span>'
+                    '</div>',
+                    unsafe_allow_html=True,
                 )
-                email = st.text_input(
-                    "Email Address",
-                    value=logged_in_user.get("email", ""),
-                )
-                phone = st.text_input(
-                    "Phone",
-                    value=logged_in_user.get("phone", ""),
-                )
-                save_profile = st.form_submit_button(
-                    "SAVE PROFILE",
+
+                st.markdown("---")
+                if st.button(
+                    "LOG OUT",
                     use_container_width=True,
-                )
-
-            if save_profile:
-                success, message = update_user_profile(
-                    logged_in_username,
-                    display_name,
-                    email,
-                    phone,
-                )
-                if success:
-                    st.success(message)
+                    key="aura_final_logout",
+                ):
+                    logout()
                     st.rerun()
-                else:
-                    st.error(message)
-
-            st.markdown("---")
-            st.markdown("**SETTINGS**")
-            st.markdown(
-                '<div class="aura-setting-row">'
-                '<span class="aura-setting-label">Theme</span>'
-                '<span class="aura-setting-value">Dark Terminal</span>'
-                '</div>'
-                '<div class="aura-setting-row">'
-                '<span class="aura-setting-label">Notifications</span>'
-                '<span class="aura-setting-value">Enabled</span>'
-                '</div>'
-                '<div class="aura-setting-row">'
-                '<span class="aura-setting-label">Account</span>'
-                f'<span class="aura-setting-value">{html.escape(str(logged_in_user.get("role", "User")))}</span>'
-                '</div>',
-                unsafe_allow_html=True,
-            )
-
-            st.markdown("---")
-            if st.button(
-                "LOG OUT",
-                use_container_width=True,
-                key="aura_final_logout",
-            ):
-                logout()
-                st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================================
-# SIDEBAR — MARKET CONTROL
+# SIDEBAR — BRAND + NAVIGATION + MARKET CONTROL
 # ==========================================================
-st.sidebar.markdown('<div style="font-size:1.35rem;font-weight:850;letter-spacing:2px;margin-bottom:4px;">MARKET CONTROL</div>', unsafe_allow_html=True)
-st.sidebar.markdown('<div style="color:#68778c;font-size:.72rem;letter-spacing:1px;margin-bottom:20px;">SELECT AI MODEL</div>', unsafe_allow_html=True)
+st.sidebar.markdown(
+    '<div class="sidebar-brand-row">'
+    '<div class="sidebar-brand-icon">◈</div>'
+    '<div class="sidebar-brand-text">'
+    '<div class="brand">AURA AI</div>'
+    '<div class="brand-subtitle">ADAPTIVE UNCERTAINTY<br>RISK • ANALYTICS</div>'
+    '</div></div>',
+    unsafe_allow_html=True,
+)
+
+st.sidebar.markdown('<div class="sidebar-nav-title">Navigate</div>', unsafe_allow_html=True)
+
+NAV_ITEMS = [
+    ("Dashboard", "▦"),
+    ("Live Prediction", "⚡"),
+    ("Uncertainty Map", "◈"),
+    ("Monte Carlo", "🎲"),
+    ("Backtesting", "📊"),
+    ("Alerts", "🔔"),
+]
+for nav_label, nav_icon in NAV_ITEMS:
+    nav_slug = nav_label.lower().replace(" ", "_")
+    with st.sidebar.container(key=f"nav_{nav_slug}"):
+        if st.button(f"{nav_icon}   {nav_label}", key=f"nav_{nav_slug}_btn", use_container_width=True):
+            st.session_state.page = nav_label
+            st.rerun()
+
+active_nav_slug = st.session_state.page.lower().replace(" ", "_")
+st.sidebar.markdown(
+    f"<style>.st-key-nav_{active_nav_slug} button {{"
+    f"background:rgba(34,211,238,.10) !important;"
+    f"border-color:rgba(34,211,238,.35) !important;"
+    f"color:#e8eef7 !important;}}</style>",
+    unsafe_allow_html=True,
+)
+
+st.sidebar.markdown('<div class="sidebar-market-title">Market</div>', unsafe_allow_html=True)
 indian_stocks = [name for name, info in STOCKS.items() if info.get("market") == "India"]
 us_stocks = [name for name, info in STOCKS.items() if info.get("market") == "USA"]
-market = st.sidebar.radio("Market", ["🇮🇳 India", "🇺🇸 United States"], horizontal=False)
+market = st.sidebar.radio("Market", ["🇮🇳 India", "🇺🇸 United States"], horizontal=False, label_visibility="collapsed")
 available_stocks = indian_stocks if market.startswith("🇮🇳") else us_stocks
 if not available_stocks:
     st.error("No stocks are configured for the selected market."); st.stop()
@@ -2375,121 +2151,610 @@ ticker = config.get("ticker", "N/A")
 company_name = config.get("name", selected_stock)
 st.sidebar.divider()
 st.sidebar.markdown(f'''<div class="info-panel"><div class="company-identity">{company_logo_html(selected_stock,ticker,small=True)}<div class="company-identity-text"><div class="company-identity-name">{html.escape(str(company_name))}</div><div class="company-identity-meta">{html.escape(str(ticker))} &nbsp;•&nbsp; {html.escape(str(config.get("market","")))}</div></div></div><div style="height:18px;"></div><div class="info-key">Market</div><div class="info-value">{get_market_flag(config.get("market"))} {html.escape(str(config.get("market","")))}</div><br><div class="info-key">AI Architecture</div><div class="info-value">LSTM + Monte Carlo Dropout</div></div>''', unsafe_allow_html=True)
-st.sidebar.markdown('<div style="margin-top:20px;color:#536176;font-size:.68rem;line-height:1.6;">Predictions are generated from the selected stock\'s dedicated trained model.</div>', unsafe_allow_html=True)
+
+stock_data = load_stock_data(selected_stock)
+
+# ------------------------------------------------------------------
+# AUTO-REFRESH: pull any missing recent rows via yfinance, once per
+# session per stock, so "Data Through" doesn't silently go stale.
+# ------------------------------------------------------------------
+if "refreshed_stocks" not in st.session_state:
+    st.session_state.refreshed_stocks = {}
+
+last_data_date = get_last_data_date(stock_data)
+stale = is_data_stale(last_data_date)
+already_attempted_today = st.session_state.refreshed_stocks.get(selected_stock) == time.strftime("%Y-%m-%d")
+
+refresh_clicked = st.sidebar.button("🔄  Refresh Data", key="manual_refresh_btn", use_container_width=True)
+
+if refresh_clicked or (stale and not already_attempted_today):
+    with st.sidebar:
+        with st.spinner("Checking for newer market data..."):
+            updated_df, refresh_error = refresh_stock_data(selected_stock, ticker, stock_data)
+    st.session_state.refreshed_stocks[selected_stock] = time.strftime("%Y-%m-%d")
+    if refresh_error:
+        st.sidebar.warning(f"Auto-refresh failed: {refresh_error}")
+    elif updated_df is not None and get_last_data_date(updated_df) != last_data_date:
+        try:
+            save_stock_data(selected_stock, updated_df)
+            stock_data = updated_df
+            st.sidebar.success("Data refreshed.")
+        except Exception as exc:
+            st.sidebar.warning(f"Fetched new data but could not save it: {exc}")
+    elif refresh_clicked:
+        st.sidebar.info("Already up to date.")
+
+data_feed_state = "Live" if stock_data is not None else "Offline"
+data_feed_color = "#22c55e" if stock_data is not None else "#f87171"
+current_last_date = get_last_data_date(stock_data)
+current_stale = is_data_stale(current_last_date)
+data_through_display = current_last_date.strftime("%d %b %Y") if current_last_date is not None else "Unavailable"
+data_through_color = "#f59e0b" if current_stale else "#718096"
+st.sidebar.markdown(
+    f'''<div class="status-card">
+    <div class="status-row"><span class="status-label"><span class="dot"></span>Connected</span><span class="status-value">{time.strftime("%I:%M:%S %p")}</span></div>
+    <div class="status-row"><span class="status-label">Data Feed</span><span class="status-value" style="color:{data_feed_color};">{data_feed_state}</span></div>
+    <div class="status-row"><span class="status-label">Data Through</span><span class="status-value" style="color:{data_through_color};">{data_through_display}{" ⚠" if current_stale else ""}</span></div>
+    </div>''',
+    unsafe_allow_html=True,
+)
+st.sidebar.markdown('<div style="margin-top:16px;color:#536176;font-size:.68rem;line-height:1.6;">Predictions are generated from the selected stock\'s dedicated trained model.</div>', unsafe_allow_html=True)
 
 # ==========================================================
-# DATA STATUS
+# DATA STATUS + LIVE PREDICTION STATE (shared across pages)
 # ==========================================================
-stock_data = load_stock_data(selected_stock)
 if stock_data is not None:
     valid_dates = stock_data["Date"].dropna() if "Date" in stock_data.columns else pd.Series(dtype="datetime64[ns]")
     last_date = valid_dates.iloc[-1].strftime("%d %b %Y") if len(valid_dates) else "Unavailable"
     data_rows = len(stock_data)
 else:
     last_date = "Unavailable"; data_rows = 0
+
 if st.session_state.get("live_stock") != selected_stock:
     st.session_state.pop("live_result", None)
     st.session_state.pop("prediction_time", None)
 
-# ==========================================================
-# HERO
-# ==========================================================
-hero_svg = """
-<svg viewBox="0 0 330 155" preserveAspectRatio="none" aria-hidden="true">
-<defs><linearGradient id="auraLine" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".15"/><stop offset=".48" stop-color="#67e8f9" stop-opacity=".95"/><stop offset="1" stop-color="#3b82f6" stop-opacity=".70"/></linearGradient><linearGradient id="auraFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs>
-<g stroke="#334155" stroke-opacity=".18" stroke-width="1"><path d="M18 34H312M18 67H312M18 100H312M18 133H312"/><path d="M55 22V140M110 22V140M165 22V140M220 22V140M275 22V140"/></g>
-<path d="M18 121 C48 112,55 118,78 101 S112 88,133 96 S164 74,183 82 S211 51,229 67 S256 43,276 55 S294 34,312 42 L312 140 L18 140 Z" fill="url(#auraFill)"/>
-<path d="M18 121 C48 112,55 118,78 101 S112 88,133 96 S164 74,183 82 S211 51,229 67 S256 43,276 55 S294 34,312 42" fill="none" stroke="url(#auraLine)" stroke-width="2.8" stroke-linecap="round"/>
-<path d="M183 82 L183 24 M229 67 L229 28" stroke="#67e8f9" stroke-opacity=".18" stroke-dasharray="3 4"/><circle cx="229" cy="67" r="4.5" fill="#67e8f9"/><circle cx="229" cy="67" r="10" fill="#67e8f9" fill-opacity=".08"/>
-<text x="18" y="18" fill="#516276" font-size="7" font-family="Inter, sans-serif" letter-spacing="1.4">AI FORECAST ENGINE</text><text x="235" y="18" fill="#516276" font-size="7" font-family="Inter, sans-serif">MC • 95%</text>
-</svg>"""
-st.markdown(f'''<div class="hero-final"><div class="hero-grid"><div><div class="hero-label-final">AI MARKET INTELLIGENCE</div><div class="hero-main">{company_logo_html(selected_stock,ticker)}<div><div class="hero-title-final">{html.escape(str(company_name))}</div><div class="hero-ticker-final">{html.escape(str(ticker))} &nbsp; | &nbsp; {get_market_flag(config.get("market"))} {html.escape(str(config.get("market","")))} &nbsp; | &nbsp; Dedicated LSTM Model</div></div></div><div class="hero-description">Uncertainty-aware next-step forecasting using the selected stock's trained LSTM model with Monte Carlo Dropout risk estimation.</div><div class="hero-chip-row"><span class="hero-chip">LSTM FORECAST</span><span class="hero-chip">MC DROPOUT</span><span class="hero-chip">95% RANGE</span><span class="hero-chip">RISK AWARE</span></div></div><div class="hero-visual"><div class="hero-visual-label">AURA AI / MARKET TRAJECTORY</div>{hero_svg}</div></div></div>''', unsafe_allow_html=True)
-
-# ==========================================================
-# LIVE AI INTELLIGENCE
-# ==========================================================
-st.markdown('<div class="section-title">Live AI Intelligence</div>', unsafe_allow_html=True)
-st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
-run_prediction = st.button(f"⚡ RUN {str(selected_stock).upper()} AI ANALYSIS", use_container_width=True, key="run_final_prediction")
-if run_prediction:
-    with st.spinner(f"Running {selected_stock} LSTM + uncertainty engine..."):
-        try:
-            result = generate_live_prediction(selected_stock)
-            if not isinstance(result, dict): raise ValueError("Prediction engine returned an invalid result format.")
-            st.session_state["live_result"] = result
-            st.session_state["live_stock"] = selected_stock
-            st.session_state["prediction_time"] = time.strftime("%d %b %Y • %H:%M:%S")
-            st.session_state["live_error"] = None
-        except Exception as exc:
-            st.session_state["live_result"] = None; st.session_state["live_stock"] = selected_stock; st.session_state["live_error"] = str(exc)
 live_result = st.session_state.get("live_result") if st.session_state.get("live_stock") == selected_stock else None
+
+
+def run_live_prediction():
+    """Run the real AURA AI prediction engine directly.
+
+    The standalone backend has already been verified to return successfully.
+    Running it directly here avoids the Windows subprocess/capture-output
+    deadlock that can leave Streamlit stuck on the spinner.
+    """
+    try:
+        st.session_state["live_result"] = None
+        st.session_state["live_stock"] = selected_stock
+        st.session_state["live_error"] = None
+
+        # This is the same tested backend used by:
+        # python -c "from src.live_prediction import generate_live_prediction; ..."
+        with st.spinner(f"Running {selected_stock} AI prediction engine..."):
+            result = generate_live_prediction(selected_stock)
+
+        if not isinstance(result, dict):
+            raise ValueError("Prediction engine returned an invalid result.")
+
+        required = (
+            "latest_price",
+            "predicted_price",
+            "percentage_change",
+            "uncertainty",
+        )
+        missing = [key for key in required if key not in result]
+        if missing:
+            raise ValueError(
+                "Prediction result is missing: " + ", ".join(missing)
+            )
+
+        # Normalize backend terminology to the dashboard terminology.
+        signal = str(result.get("signal", "HOLD")).upper().strip()
+        if signal in {"POSITIVE", "BULLISH", "BUY"}:
+            result["signal"] = "BUY"
+        elif signal in {"NEGATIVE", "BEARISH", "SELL"}:
+            result["signal"] = "SELL"
+        else:
+            result["signal"] = "HOLD"
+
+        # Make sure numeric values are JSON/UI safe before storing them.
+        for key in (
+            "latest_price",
+            "predicted_price",
+            "percentage_change",
+            "uncertainty",
+            "lower_bound",
+            "upper_bound",
+        ):
+            if key in result:
+                result[key] = float(result[key])
+
+        result["status"] = "success"
+
+        st.session_state["live_result"] = result
+        st.session_state["live_stock"] = selected_stock
+        st.session_state["prediction_time"] = time.strftime(
+            "%d %b %Y • %H:%M:%S"
+        )
+        st.session_state["live_error"] = None
+
+        return result
+
+    except Exception as exc:
+        st.session_state["live_result"] = None
+        st.session_state["live_stock"] = selected_stock
+        st.session_state["live_error"] = (
+            f"{type(exc).__name__}: {exc}"
+        )
+        return None
+
+
 live_error = st.session_state.pop("live_error", None)
-if live_error: st.error(f"AI prediction failed: {live_error}")
+if live_error:
+    st.error(f"AI prediction failed: {live_error}")
 
-# ==========================================================
-# RESULTS
-# ==========================================================
+# Refresh state after a button click in the same Streamlit run.
+live_result = st.session_state.get("live_result") if st.session_state.get("live_stock") == selected_stock else None
+
+parsed = None
 if live_result is not None:
     try:
-        latest_price=float(live_result.get("latest_price",0)); predicted_price=float(live_result.get("predicted_price",0)); percentage_change=float(live_result.get("percentage_change",0)); uncertainty=abs(float(live_result.get("uncertainty",0))); lower_bound=float(live_result.get("lower_bound",predicted_price-uncertainty)); upper_bound=float(live_result.get("upper_bound",predicted_price+uncertainty)); signal=str(live_result.get("signal","Neutral")); risk=calculate_risk(uncertainty,predicted_price)
-    except (TypeError,ValueError) as exc:
-        st.error(f"Prediction result contains invalid numeric data: {exc}"); live_result=None
+        parsed = {}
+        parsed["latest_price"] = float(live_result.get("latest_price", 0))
+        parsed["predicted_price"] = float(live_result.get("predicted_price", 0))
+        parsed["percentage_change"] = float(live_result.get("percentage_change", 0))
+        parsed["uncertainty"] = abs(float(live_result.get("uncertainty", 0)))
+        parsed["lower_bound"] = float(live_result.get("lower_bound", parsed["predicted_price"] - parsed["uncertainty"]))
+        parsed["upper_bound"] = float(live_result.get("upper_bound", parsed["predicted_price"] + parsed["uncertainty"]))
+        # Use the authoritative values returned by the live prediction engine.
+        # Do not recalculate risk or confidence here.
+        parsed["model"] = str(live_result.get("model", "Unknown"))
+        parsed["model_path"] = str(live_result.get("model_path", ""))
+        parsed["uncertainty_method"] = str(live_result.get("uncertainty_method", "Monte Carlo Dropout"))
+        parsed["horizon"] = str(live_result.get("horizon", "1 Day"))
+        parsed["sequence_length"] = int(live_result.get("sequence_length", 60))
+        parsed["signal"] = str(live_result.get("signal", "HOLD")).upper()
+        parsed["risk"] = str(live_result.get("risk", "UNKNOWN")).upper()
+        parsed["confidence"] = float(live_result.get("confidence", 0.0))
+        parsed["confidence_label"] = str(live_result.get("confidence_label", "95% prediction interval"))
+        parsed["samples"] = live_result.get("samples", []) or []
+        parsed["mc_samples"] = int(live_result.get("mc_samples", len(parsed["samples"])))
+        parsed["data_through"] = str(live_result.get("data_through", last_date))
+        parsed["rows_used"] = int(live_result.get("rows_used", data_rows))
+        st.session_state["notifications"] = [
+            {"type": "AI SIGNAL", "message": f"{selected_stock}: {parsed['signal']} signal generated.", "time": st.session_state.get("prediction_time", "Now")},
+            {"type": "MARKET", "message": f"Forecast: {format_currency(parsed['predicted_price'], currency)} ({parsed['percentage_change']:+.2f}%).", "time": "Latest run"},
+            {"type": "RISK", "message": f"Model risk is {parsed['risk']}; uncertainty ±{format_currency(parsed['uncertainty'], currency)}.", "time": "Latest run"},
+        ]
+    except (TypeError, ValueError) as exc:
+        st.error(f"Prediction result contains invalid numeric data: {exc}")
+        parsed = None
 
-if live_result is not None:
-    st.session_state["notifications"]=[
-        {"type":"AI SIGNAL","message":f"{selected_stock}: {signal} signal generated.","time":st.session_state.get("prediction_time","Now")},
-        {"type":"MARKET","message":f"Forecast: {format_currency(predicted_price,currency)} ({percentage_change:+.2f}%).","time":"Latest run"},
-        {"type":"RISK","message":f"Model risk is {risk}; uncertainty ±{format_currency(uncertainty,currency)}.","time":"Latest run"},
-    ]
-    cols=st.columns(4)
-    metric_data=[("Live Market Price",format_currency(latest_price,currency),"Latest market observation"),("AI Forecast",format_currency(predicted_price,currency),"Next predicted price"),("Expected Movement",("▲ " if percentage_change>=0 else "▼ ")+f"{percentage_change:+.2f}%","AI forecast vs current price"),("AI Uncertainty","±"+format_currency(uncertainty,currency),"Monte Carlo prediction spread")]
-    for col,(label,value,small) in zip(cols,metric_data):
-        with col: st.markdown(f'''<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value">{value}</div><div class="metric-small">{small}</div></div>''',unsafe_allow_html=True)
+page = st.session_state.page
 
-    st.markdown('<div class="section-title">AI Decision Layer</div>',unsafe_allow_html=True); st.markdown('<div class="section-line"></div>',unsafe_allow_html=True)
-    sk=signal.lower()
-    signal_class,signal_text=("signal-positive","▲ POSITIVE") if "positive" in sk else (("signal-negative","▼ NEGATIVE") if "negative" in sk else ("signal-neutral","● NEUTRAL"))
-    risk_symbol={"LOW":"◉","MODERATE":"◐","HIGH":"◑","VERY HIGH":"◉"}.get(risk,"●")
-    d1,d2,d3=st.columns([1.1,1,1.5])
-    with d1: st.markdown(f'''<div class="signal-card"><div class="metric-label">AI SIGNAL</div><div class="{signal_class}">{signal_text}</div><div class="metric-small">Based on model forecast</div></div>''',unsafe_allow_html=True)
-    with d2: st.markdown(f'''<div class="signal-card"><div class="metric-label">MODEL RISK</div><div style="color:#f5f7fa;font-size:1.35rem;font-weight:800;margin-top:9px;">{risk_symbol} {risk}</div><div class="metric-small">{risk_message(risk)}</div></div>''',unsafe_allow_html=True)
-    with d3: st.markdown(f'''<div class="signal-card"><div class="metric-label">95% PREDICTION RANGE</div><div style="color:#f5f7fa;font-size:1.18rem;font-weight:800;margin-top:9px;">{format_currency(lower_bound,currency)} &nbsp;|&nbsp; {format_currency(upper_bound,currency)}</div><div class="metric-small">Uncertainty interval produced by the AI engine</div></div>''',unsafe_allow_html=True)
+# ==========================================================
+# PAGE: DASHBOARD
+# ==========================================================
+if page == "Dashboard":
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Intelligent Stock Analytics</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Adaptive uncertainty • Risk aware • AI powered predictions</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="section-title">Market Trajectory</div>',unsafe_allow_html=True); st.markdown('<div class="section-line"></div>',unsafe_allow_html=True); st.markdown('<div class="chart-note">Historical price • AI forecast • shaded 95% prediction interval</div>',unsafe_allow_html=True)
-    try:
-        import plotly.graph_objects as go
+    confidence_display = f"{parsed['confidence']:.1f}%" if parsed else "—"
+    status_display = "Live" if parsed else "Idle"
+    st.markdown(
+        f'''<div class="stat-pill-row">
+        <div class="stat-pill"><div class="stat-pill-label">Model</div><div class="stat-pill-value">{html.escape(parsed["model"]) if parsed else "Auto-selected"}</div></div>
+        <div class="stat-pill"><div class="stat-pill-label">Uncertainty</div><div class="stat-pill-value">Monte Carlo</div></div>
+        <div class="stat-pill"><div class="stat-pill-label">Confidence</div><div class="stat-pill-value">{confidence_display}</div></div>
+        <div class="stat-pill"><div class="stat-pill-label">Status</div><div class="stat-pill-value live-dot">{status_display}</div></div>
+        </div>''',
+        unsafe_allow_html=True,
+    )
+
+    left_col, right_col = st.columns([1.55, 1], gap="medium")
+
+    with left_col:
+        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="dash-card-title">Live Price Overview</div>'
+            f'<div class="dash-card-sub">{html.escape(str(company_name))} • {html.escape(str(ticker))}</div>',
+            unsafe_allow_html=True,
+        )
+
+        if "timeframe" not in st.session_state:
+            st.session_state.timeframe = "3M"
+        TIMEFRAMES = ["1W", "1M", "3M", "1Y", "All"]
+        tf_cols = st.columns(len(TIMEFRAMES))
+        for tf, tcol in zip(TIMEFRAMES, tf_cols):
+            with tcol:
+                with st.container(key=f"tf_{tf}"):
+                    if st.button(tf, key=f"tf_{tf}_btn", use_container_width=True):
+                        st.session_state.timeframe = tf
+                        st.rerun()
+        st.markdown(
+            f"<style>.st-key-tf_{st.session_state.timeframe} button {{"
+            f"background:rgba(34,211,238,.12) !important;"
+            f"border-color:rgba(34,211,238,.4) !important;"
+            f"color:#67e8f9 !important;}}</style>",
+            unsafe_allow_html=True,
+        )
+
         if stock_data is not None and "Close" in stock_data.columns and "Date" in stock_data.columns:
-            chart_df=stock_data.dropna(subset=["Date","Close"]).tail(180).copy(); fig=go.Figure()
-            fig.add_trace(go.Scatter(x=chart_df["Date"],y=chart_df["Close"],mode="lines",name="Historical Price",line=dict(width=2.5)))
-            if len(chart_df):
-                last_date_obj=chart_df["Date"].iloc[-1]; future_date=last_date_obj+pd.Timedelta(days=1)
-                fig.add_trace(go.Scatter(x=[last_date_obj,future_date],y=[latest_price,predicted_price],mode="lines+markers",name="AI Forecast",line=dict(width=3,dash="dot"),marker=dict(size=9)))
-                fig.add_trace(go.Scatter(x=[last_date_obj,future_date,future_date,last_date_obj],y=[latest_price,upper_bound,lower_bound,latest_price],fill="toself",fillcolor="rgba(34,211,238,0.10)",line=dict(width=0),hoverinfo="skip",name="95% Range"))
-                fig.add_trace(go.Scatter(x=[future_date],y=[upper_bound],mode="markers",name="Upper Bound",marker=dict(size=7)))
-                fig.add_trace(go.Scatter(x=[future_date],y=[lower_bound],mode="markers",name="Lower Bound",marker=dict(size=7)))
-            fig.update_layout(height=470,margin=dict(l=10,r=10,t=20,b=10),paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",font=dict(color="#9aa8bb"),hovermode="x unified",xaxis=dict(showgrid=False,zeroline=False),yaxis=dict(showgrid=True,gridcolor="rgba(255,255,255,0.05)",zeroline=False,tickprefix=currency),legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
-            st.plotly_chart(fig,use_container_width=True)
-        else: st.warning("Historical chart data is unavailable.")
-    except ImportError: st.warning("Plotly is required for the advanced chart.")
-    except Exception as exc: st.warning(f"Unable to render the forecast chart: {exc}")
+            df_clean = stock_data.dropna(subset=["Date", "Close"]).copy()
+            days = get_timeframe_days(st.session_state.timeframe)
+            plot_df = df_clean.tail(days) if days else df_clean
+            if len(plot_df) >= 2:
+                period_change = plot_df["Close"].iloc[-1] - plot_df["Close"].iloc[0]
+                period_change_pct = (period_change / plot_df["Close"].iloc[0] * 100) if plot_df["Close"].iloc[0] else 0
+                change_class = "up" if period_change >= 0 else "down"
+                arrow = "▲" if period_change >= 0 else "▼"
+                st.markdown(
+                    f'<div class="dash-price">{format_currency(plot_df["Close"].iloc[-1], currency)}'
+                    f'<span class="dash-price-change {change_class}">{arrow} {format_currency(abs(period_change), currency)} ({period_change_pct:+.2f}%)</span></div>',
+                    unsafe_allow_html=True,
+                )
+                import plotly.graph_objects as go
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(
+                    x=plot_df["Date"], y=plot_df["Close"], mode="lines",
+                    line=dict(width=2.2, color="#22d3ee"),
+                    fill="tozeroy", fillcolor="rgba(34,211,238,0.06)",
+                    hovertemplate="%{x|%d %b %Y}<br>" + currency + "%{y:,.2f}<extra></extra>",
+                ))
+                fig.update_layout(
+                    height=340, margin=dict(l=10, r=10, t=16, b=10),
+                    paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                    font=dict(color="#9aa8bb"),
+                    xaxis=dict(showgrid=False, zeroline=False),
+                    yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", zeroline=False, tickprefix=currency),
+                )
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.markdown('<div class="empty-state">Not enough data points for this timeframe.</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="empty-state">No historical dataset found for this stock.</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="section-title">Model Intelligence</div>',unsafe_allow_html=True); st.markdown('<div class="section-line"></div>',unsafe_allow_html=True)
-    info=[("MODEL","LSTM","Long Short-Term Memory"),("UNCERTAINTY","MC DROPOUT","Monte Carlo simulations"),("DATA POINTS",f"{data_rows:,}","Historical observations"),("DATA THROUGH",last_date,"Latest stored observation")]
-    info_cols=st.columns(4)
-    for col,(label,value,small) in zip(info_cols,info):
-        with col: st.markdown(f'''<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value" style="font-size:1.05rem;">{value}</div><div class="metric-small">{small}</div></div>''',unsafe_allow_html=True)
-    if st.session_state.get("prediction_time"): st.caption(f"Last AI analysis: {st.session_state['prediction_time']} • Selected model: {ticker}")
+    with right_col:
+        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+        st.markdown('<div class="dash-card-title">Model Summary</div>', unsafe_allow_html=True)
+        donut_fig = render_confidence_donut(parsed["confidence"] if parsed else 0.0)
+        st.plotly_chart(donut_fig, use_container_width=True, config={"displayModeBar": False})
+        st.markdown(
+            f'''<div class="summary-row"><span class="k">Model</span><span class="v">{html.escape(parsed["model"]) if parsed else "Auto-selected"}</span></div>
+            <div class="summary-row"><span class="k">Horizon</span><span class="v">{html.escape(parsed["horizon"]) if parsed else "1 Day"}</span></div>
+            <div class="summary-row"><span class="k">Method</span><span class="v">{html.escape(parsed["uncertainty_method"]) if parsed else "Monte Carlo Dropout"}</span></div>
+            <div class="summary-row"><span class="k">Status</span><span class="v">{"Live" if parsed else "Idle — run analysis"}</span></div>''',
+            unsafe_allow_html=True,
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+        st.markdown('<div class="dash-card-title">Prediction (Next Day)</div>', unsafe_allow_html=True)
+        if parsed:
+            arrow = "▲" if parsed["percentage_change"] >= 0 else "▼"
+            change_class = "up" if parsed["percentage_change"] >= 0 else "down"
+            st.markdown(
+                f'<div class="dash-price" style="font-size:1.55rem;">{format_currency(parsed["predicted_price"], currency)}'
+                f'<span class="dash-price-change {change_class}">{arrow} {parsed["percentage_change"]:+.2f}%</span></div>',
+                unsafe_allow_html=True,
+            )
+            if stock_data is not None and "Close" in stock_data.columns:
+                spark_values = list(stock_data["Close"].dropna().tail(30)) + [parsed["predicted_price"]]
+                st.plotly_chart(render_sparkline(spark_values), use_container_width=True, config={"displayModeBar": False})
+        else:
+            st.markdown(
+                '<div class="empty-state">No forecast yet.<br>Run analysis on the Live Prediction page.</div>',
+                unsafe_allow_html=True,
+            )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="dash-card-title">Uncertainty Range (95%)</div>'
+        '<div class="dash-card-sub">Projected — widened using √t scaling from the latest Monte Carlo run. Not a stored multi-day backtest.</div>',
+        unsafe_allow_html=True,
+    )
+    if parsed:
+        import plotly.graph_objects as go
+        horizon = list(range(1, 8))
+        base_unc = parsed["uncertainty"]
+        upper_path = [parsed["predicted_price"] + base_unc * (d ** 0.5) for d in horizon]
+        lower_path = [parsed["predicted_price"] - base_unc * (d ** 0.5) for d in horizon]
+        mid_path = [parsed["predicted_price"] for _ in horizon]
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=horizon + horizon[::-1], y=upper_path + lower_path[::-1], fill="toself",
+                                  fillcolor="rgba(34,211,238,0.10)", line=dict(width=0), hoverinfo="skip", name="95% Range"))
+        fig.add_trace(go.Scatter(x=horizon, y=mid_path, mode="lines", line=dict(width=2, dash="dot", color="#67e8f9"), name="Prediction"))
+        fig.add_trace(go.Scatter(x=horizon, y=upper_path, mode="lines", line=dict(width=1, color="#67e8f9"), name="Upper Bound"))
+        fig.add_trace(go.Scatter(x=horizon, y=lower_path, mode="lines", line=dict(width=1, color="#67e8f9"), name="Lower Bound"))
+        fig.update_layout(
+            height=300, margin=dict(l=10, r=10, t=10, b=10),
+            paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"),
+            xaxis=dict(title="Days ahead", showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", zeroline=False, tickprefix=currency),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.markdown('<div class="empty-state">Run AI analysis to see the projected uncertainty range.</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ==========================================================
+# PAGE: LIVE PREDICTION
+# ==========================================================
+elif page == "Live Prediction":
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Live Prediction</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Run the automatically selected trained model with Monte Carlo Dropout uncertainty on demand.</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="section-title" style="margin-top:26px;">Live AI Intelligence</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
+    if st.button(
+        f"⚡ RUN {str(selected_stock).upper()} AI ANALYSIS",
+        use_container_width=True,
+        key="run_final_prediction",
+        type="primary",
+    ):
+        # The prediction is executed in a separate Python process and stored
+        # immediately. No st.rerun() is needed; the current script continues
+        # and renders the freshly stored result below.
+        run_live_prediction()
+
+    # Re-read the state after a completed prediction.
+    live_result = st.session_state.get("live_result") if st.session_state.get("live_stock") == selected_stock else None
+    if live_result is not None:
+        try:
+            parsed = {}
+            parsed["latest_price"] = float(live_result.get("latest_price", 0))
+            parsed["predicted_price"] = float(live_result.get("predicted_price", 0))
+            parsed["percentage_change"] = float(live_result.get("percentage_change", 0))
+            parsed["uncertainty"] = abs(float(live_result.get("uncertainty", 0)))
+            parsed["lower_bound"] = float(live_result.get("lower_bound", parsed["predicted_price"] - parsed["uncertainty"]))
+            parsed["upper_bound"] = float(live_result.get("upper_bound", parsed["predicted_price"] + parsed["uncertainty"]))
+            parsed["model"] = str(live_result.get("model", "Unknown"))
+            parsed["model_path"] = str(live_result.get("model_path", ""))
+            parsed["uncertainty_method"] = str(live_result.get("uncertainty_method", "Monte Carlo Dropout"))
+            parsed["horizon"] = str(live_result.get("horizon", "1 Day"))
+            parsed["sequence_length"] = int(live_result.get("sequence_length", 60))
+            parsed["signal"] = str(live_result.get("signal", "HOLD")).upper()
+            parsed["risk"] = str(live_result.get("risk", "UNKNOWN")).upper()
+            parsed["confidence"] = float(live_result.get("confidence", 0.0))
+            parsed["confidence_label"] = str(live_result.get("confidence_label", "95% prediction interval"))
+            parsed["samples"] = live_result.get("samples", []) or []
+            parsed["mc_samples"] = int(live_result.get("mc_samples", len(parsed["samples"])))
+            parsed["data_through"] = str(live_result.get("data_through", last_date))
+            parsed["rows_used"] = int(live_result.get("rows_used", data_rows))
+        except (TypeError, ValueError) as exc:
+            st.error(f"Prediction result contains invalid numeric data: {exc}")
+            parsed = None
+
+    if parsed:
+        cols = st.columns(4)
+        metric_data = [
+            ("Live Market Price", format_currency(parsed["latest_price"], currency), "Latest market observation"),
+            ("AI Forecast", format_currency(parsed["predicted_price"], currency), "Next predicted price"),
+            ("Expected Movement", ("▲ " if parsed["percentage_change"] >= 0 else "▼ ") + f"{parsed['percentage_change']:+.2f}%", "AI forecast vs current price"),
+            ("AI Uncertainty", "±" + format_currency(parsed["uncertainty"], currency), "Monte Carlo prediction spread"),
+        ]
+        for col, (label, value, small) in zip(cols, metric_data):
+            with col:
+                st.markdown(f'''<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value">{value}</div><div class="metric-small">{small}</div></div>''', unsafe_allow_html=True)
+
+        st.markdown('<div class="section-title">AI Decision Layer</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
+        signal_map = {
+            "BUY": ("signal-positive", "▲ BUY"),
+            "SELL": ("signal-negative", "▼ SELL"),
+            "HOLD": ("signal-neutral", "● HOLD"),
+        }
+        signal_class, signal_text = signal_map.get(
+            parsed["signal"].upper(),
+            ("signal-neutral", f"● {parsed['signal'].upper()}")
+        )
+        risk_symbol = {"LOW": "◉", "MODERATE": "◐", "HIGH": "◑", "VERY HIGH": "◉"}.get(parsed["risk"], "●")
+        d1, d2, d3 = st.columns([1.1, 1, 1.5])
+        with d1:
+            st.markdown(f'''<div class="signal-card"><div class="metric-label">AI SIGNAL</div><div class="{signal_class}">{signal_text}</div><div class="metric-small">Based on model forecast</div></div>''', unsafe_allow_html=True)
+        with d2:
+            st.markdown(f'''<div class="signal-card"><div class="metric-label">MODEL RISK</div><div style="color:#f5f7fa;font-size:1.35rem;font-weight:800;margin-top:9px;">{risk_symbol} {parsed["risk"]}</div><div class="metric-small">{risk_message(parsed["risk"])}</div></div>''', unsafe_allow_html=True)
+        with d3:
+            st.markdown(f'''<div class="signal-card"><div class="metric-label">95% PREDICTION RANGE</div><div style="color:#f5f7fa;font-size:1.18rem;font-weight:800;margin-top:9px;">{format_currency(parsed["lower_bound"], currency)} &nbsp;|&nbsp; {format_currency(parsed["upper_bound"], currency)}</div><div class="metric-small">Uncertainty interval produced by the AI engine</div></div>''', unsafe_allow_html=True)
+
+        st.markdown('<div class="section-title">Market Trajectory</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
+        st.markdown('<div class="chart-note">Historical price • AI forecast • shaded 95% prediction interval</div>', unsafe_allow_html=True)
+        try:
+            import plotly.graph_objects as go
+            if stock_data is not None and "Close" in stock_data.columns and "Date" in stock_data.columns:
+                chart_df = stock_data.dropna(subset=["Date", "Close"]).tail(180).copy()
+                fig = go.Figure()
+                fig.add_trace(go.Scatter(x=chart_df["Date"], y=chart_df["Close"], mode="lines", name="Historical Price", line=dict(width=2.5)))
+                if len(chart_df):
+                    last_date_obj = chart_df["Date"].iloc[-1]
+                    future_date = last_date_obj + pd.Timedelta(days=1)
+                    fig.add_trace(go.Scatter(x=[last_date_obj, future_date], y=[parsed["latest_price"], parsed["predicted_price"]], mode="lines+markers", name="AI Forecast", line=dict(width=3, dash="dot"), marker=dict(size=9)))
+                    fig.add_trace(go.Scatter(x=[last_date_obj, future_date, future_date, last_date_obj], y=[parsed["latest_price"], parsed["upper_bound"], parsed["lower_bound"], parsed["latest_price"]], fill="toself", fillcolor="rgba(34,211,238,0.10)", line=dict(width=0), hoverinfo="skip", name="95% Range"))
+                    fig.add_trace(go.Scatter(x=[future_date], y=[parsed["upper_bound"]], mode="markers", name="Upper Bound", marker=dict(size=7)))
+                    fig.add_trace(go.Scatter(x=[future_date], y=[parsed["lower_bound"]], mode="markers", name="Lower Bound", marker=dict(size=7)))
+                fig.update_layout(height=470, margin=dict(l=10, r=10, t=20, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), hovermode="x unified", xaxis=dict(showgrid=False, zeroline=False), yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", zeroline=False, tickprefix=currency), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.warning("Historical chart data is unavailable.")
+        except ImportError:
+            st.warning("Plotly is required for the advanced chart.")
+        except Exception as exc:
+            st.warning(f"Unable to render the forecast chart: {exc}")
+
+        st.markdown('<div class="section-title">Model Intelligence</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
+        info = [
+            ("MODEL", parsed["model"], "Automatically selected best model"),
+            ("UNCERTAINTY", parsed["uncertainty_method"], f"{parsed['mc_samples']} stochastic samples"),
+            ("DATA POINTS", f"{parsed['rows_used']:,}", "Observations used by prediction engine"),
+            ("DATA THROUGH", parsed["data_through"], "Latest data used by prediction engine"),
+        ]
+        info_cols = st.columns(4)
+        for col, (label, value, small) in zip(info_cols, info):
+            with col:
+                st.markdown(f'''<div class="metric-card"><div class="metric-label">{label}</div><div class="metric-value" style="font-size:1.05rem;">{value}</div><div class="metric-small">{small}</div></div>''', unsafe_allow_html=True)
+        if st.session_state.get("prediction_time"):
+            st.caption(f"Last AI analysis: {st.session_state['prediction_time']} • Selected model: {ticker}")
+    else:
+        st.markdown('''<div class="ready-card"><div class="ready-orb">AI</div><div class="ready-title">AI Engine Ready</div><div class="ready-text">Run AI analysis to generate the next-price forecast, Monte Carlo uncertainty estimate, 95% prediction range and model risk assessment.</div></div>''', unsafe_allow_html=True)
+
+    st.markdown('<div class="section-title">Historical Market Data</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-line"></div>', unsafe_allow_html=True)
+    if stock_data is not None:
+        chart = create_historical_chart(stock_data)
+        if chart is not None:
+            st.plotly_chart(chart, use_container_width=True)
+        with st.expander(f"View {selected_stock} raw market data"):
+            st.dataframe(stock_data.tail(30), use_container_width=True, hide_index=True)
+    else:
+        st.warning(f"No historical dataset found for {selected_stock}.")
+
+# ==========================================================
+# PAGE: UNCERTAINTY MAP
+# ==========================================================
+elif page == "Uncertainty Map":
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Uncertainty Map</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">How the model\'s confidence interval widens further into the future.</div>', unsafe_allow_html=True)
+
+    if parsed:
+        import plotly.graph_objects as go
+        horizon = list(range(1, 15))
+        base_unc = parsed["uncertainty"]
+        upper_path = [parsed["predicted_price"] + base_unc * (d ** 0.5) for d in horizon]
+        lower_path = [parsed["predicted_price"] - base_unc * (d ** 0.5) for d in horizon]
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=horizon + horizon[::-1], y=upper_path + lower_path[::-1], fill="toself", fillcolor="rgba(34,211,238,0.10)", line=dict(width=0), hoverinfo="skip", name="Uncertainty Band"))
+        fig.add_trace(go.Scatter(x=horizon, y=[parsed["predicted_price"]] * len(horizon), mode="lines", line=dict(dash="dot", color="#67e8f9"), name="Prediction"))
+        fig.update_layout(height=420, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), xaxis=dict(title="Days ahead", showgrid=False), yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", tickprefix=currency))
+        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+        st.markdown('<div class="dash-card-title">Projected Confidence Cone</div><div class="dash-card-sub">√t scaling from the latest Monte Carlo uncertainty — a projection, not a stored multi-day backtest.</div>', unsafe_allow_html=True)
+        st.plotly_chart(fig, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="empty-state">Run AI analysis on the Live Prediction page first.</div>', unsafe_allow_html=True)
+
+# ==========================================================
+# PAGE: MONTE CARLO
+# ==========================================================
+elif page == "Monte Carlo":
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Monte Carlo Simulation</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Distribution of predictions from repeated stochastic forward passes.</div>', unsafe_allow_html=True)
+
+    if parsed:
+        samples = live_result.get("samples")
+        import plotly.graph_objects as go
+        if not samples:
+            std = parsed["uncertainty"] / 1.96 if parsed["uncertainty"] else 1.0
+            samples = np.random.normal(parsed["predicted_price"], std, 500).tolist()
+            note = "Reconstructed distribution (approximate) — the live engine did not return raw samples."
+        else:
+            note = f"{len(samples)} stochastic forward passes from the live Monte Carlo Dropout run."
+        fig = go.Figure()
+        fig.add_trace(go.Histogram(x=samples, marker_color="#22d3ee", opacity=0.75, nbinsx=30))
+        fig.add_vline(x=parsed["predicted_price"], line_dash="dot", line_color="#67e8f9")
+        fig.update_layout(height=380, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), xaxis=dict(title=f"Predicted price ({currency})", showgrid=False), yaxis=dict(title="Frequency", showgrid=True, gridcolor="rgba(255,255,255,0.05)"))
+        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+        st.markdown(f'<div class="dash-card-title">Prediction Distribution</div><div class="dash-card-sub">{note}</div>', unsafe_allow_html=True)
+        st.plotly_chart(fig, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="empty-state">Run AI analysis on the Live Prediction page first.</div>', unsafe_allow_html=True)
+
+# ==========================================================
+# PAGE: BACKTESTING
+# ==========================================================
+elif page == "Backtesting":
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Backtesting</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">Historical accuracy of the trained model against actual prices.</div>', unsafe_allow_html=True)
+
+    backtest_path = find_predictions_file(selected_stock)
+    metrics_path = find_metrics_file(selected_stock)
+
+    st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+    st.markdown('<div class="dash-card-title">Prediction vs Actual</div>', unsafe_allow_html=True)
+    if backtest_path is not None:
+        try:
+            bt_df = pd.read_csv(backtest_path)
+            bt_df.columns = [str(c).strip() for c in bt_df.columns]
+            if "Date" in bt_df.columns:
+                bt_df["Date"] = pd.to_datetime(bt_df["Date"], errors="coerce")
+                bt_df = bt_df.sort_values("Date")
+            import plotly.graph_objects as go
+            fig = go.Figure()
+            x_axis = bt_df["Date"] if "Date" in bt_df.columns else bt_df.index
+            if "Actual" in bt_df.columns:
+                fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Actual"], mode="lines", name="Actual Price", line=dict(width=2.2)))
+            if "Predicted" in bt_df.columns:
+                fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Predicted"], mode="lines", name="Predicted Price", line=dict(width=2, dash="dot")))
+            fig.update_layout(height=380, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), xaxis=dict(showgrid=False), yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", tickprefix=currency))
+            st.plotly_chart(fig, use_container_width=True)
+        except Exception as exc:
+            st.markdown(f'<div class="empty-state">Could not read backtest file: {html.escape(str(exc))}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(
+            f'<div class="empty-state">No backtest results found yet.<br>'
+            f'Save one to <code>results/{selected_stock.lower().replace(" ", "_")}_predictions.csv</code> '
+            f'with <code>Date, Actual, Predicted</code> columns to populate this chart.</div>',
+            unsafe_allow_html=True,
+        )
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+    st.markdown('<div class="dash-card-title">Performance Metrics</div>', unsafe_allow_html=True)
+    if metrics_path is not None:
+        try:
+            if metrics_path.suffix == ".json":
+                import json
+                with open(metrics_path) as f:
+                    metrics = json.load(f)
+            else:
+                metrics_df = pd.read_csv(metrics_path)
+                metrics = dict(zip(metrics_df.iloc[:, 0], metrics_df.iloc[:, 1])) if metrics_df.shape[1] >= 2 else {}
+            mcols = st.columns(4)
+            labels = ["MAE", "RMSE", "MAPE", "R2"]
+            for mcol, key in zip(mcols, labels):
+                val = metrics.get(key) if isinstance(metrics, dict) else None
+                if val is None and isinstance(metrics, dict):
+                    val = metrics.get(key.lower())
+                with mcol:
+                    st.markdown(f'''<div class="metric-card"><div class="metric-label">{key}</div><div class="metric-value">{val if val is not None else "—"}</div></div>''', unsafe_allow_html=True)
+        except Exception as exc:
+            st.markdown(f'<div class="empty-state">Could not read metrics file: {html.escape(str(exc))}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="empty-state">No saved metrics file found for this stock yet.</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ==========================================================
+# PAGE: ALERTS
+# ==========================================================
 else:
-    st.markdown('''<div class="ready-card"><div class="ready-orb">AI</div><div class="ready-title">AI Engine Ready</div><div class="ready-text">Select a stock from Market Control and run AI analysis to generate the next-price forecast, Monte Carlo uncertainty estimate, 95% prediction range and model risk assessment.</div></div>''',unsafe_allow_html=True)
+    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Alerts</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">System and market notifications from your latest AI runs.</div>', unsafe_allow_html=True)
 
-# ==========================================================
-# HISTORICAL MARKET DATA
-# ==========================================================
-st.markdown('<div class="section-title">Historical Market Data</div>',unsafe_allow_html=True); st.markdown('<div class="section-line"></div>',unsafe_allow_html=True)
-if stock_data is not None:
-    chart=create_historical_chart(stock_data)
-    if chart is not None: st.plotly_chart(chart,use_container_width=True)
-    with st.expander(f"View {selected_stock} raw market data"): st.dataframe(stock_data.tail(30),use_container_width=True,hide_index=True)
-else: st.warning(f"No historical dataset found for {selected_stock}.")
+    notifications = st.session_state.get("notifications", [])
+    st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+    if not notifications:
+        st.markdown('<div class="empty-state">No notifications yet. Run AI analysis to generate alerts.</div>', unsafe_allow_html=True)
+    else:
+        for note in notifications:
+            note_type = note.get("type", "UPDATE")
+            icon = {"AI SIGNAL": "🟢", "MARKET": "📈", "RISK": "⚠️", "SYSTEM": "◈"}.get(note_type, "•")
+            st.markdown(
+                f'<div class="summary-row"><span class="k">{icon} {note_type}</span>'
+                f'<span class="v" style="font-weight:600;text-align:right;">{html.escape(str(note.get("message","")))}</span></div>',
+                unsafe_allow_html=True,
+            )
+    st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown('''<div class="final-footer"><strong>AURA AI — INTELLIGENT STOCK ANALYTICS</strong><br>LSTM Forecasting • Monte Carlo Dropout • Uncertainty-Aware Prediction<br><br>Research &amp; Educational Use • Not Financial Advice</div>''',unsafe_allow_html=True)
+st.markdown('''<div class="final-footer"><strong>AURA AI — INTELLIGENT STOCK ANALYTICS</strong><br>Multi-Model Forecasting • Monte Carlo Dropout • Uncertainty-Aware Prediction<br><br>Research &amp; Educational Use • Not Financial Advice</div>''', unsafe_allow_html=True)
