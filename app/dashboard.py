@@ -2725,31 +2725,40 @@ elif page == "Backtesting":
     backtest_path = find_predictions_file(selected_stock)
     metrics_path = find_metrics_file(selected_stock)
 
+    backtest_path = find_predictions_file(selected_stock)
+    metrics_path = find_metrics_file(selected_stock)
+
     st.markdown('<div class="dash-card">', unsafe_allow_html=True)
     st.markdown('<div class="dash-card-title">Prediction vs Actual</div>', unsafe_allow_html=True)
-    if backtest_path is not None:
+
+    bt_df = load_backtest_df(backtest_path)   # <-- must use this, NOT pd.read_csv
+
+    if bt_df is not None and {"Actual", "Predicted"}.issubset(bt_df.columns):
         try:
-            bt_df = pd.read_csv(backtest_path)
-            bt_df.columns = [str(c).strip() for c in bt_df.columns]
-            if "Date" in bt_df.columns:
-                bt_df["Date"] = pd.to_datetime(bt_df["Date"], errors="coerce")
-                bt_df = bt_df.sort_values("Date")
             import plotly.graph_objects as go
-            fig = go.Figure()
             x_axis = bt_df["Date"] if "Date" in bt_df.columns else bt_df.index
-            if "Actual" in bt_df.columns:
-                fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Actual"], mode="lines", name="Actual Price", line=dict(width=2.2)))
-            if "Predicted" in bt_df.columns:
-                fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Predicted"], mode="lines", name="Predicted Price", line=dict(width=2, dash="dot")))
-            fig.update_layout(height=380, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), xaxis=dict(showgrid=False), yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", tickprefix=currency))
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Actual"], mode="lines", name="Actual Price", line=dict(width=2.2)))
+            fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Predicted"], mode="lines", name="Predicted Price", line=dict(width=2, dash="dot")))
+            fig.update_layout(
+                height=380,
+                margin=dict(l=10, r=10, t=10, b=10),
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#9aa8bb"),
+                xaxis=dict(showgrid=False),
+                yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", tickprefix=currency),
+            )
             st.plotly_chart(fig, use_container_width=True)
         except Exception as exc:
-            st.markdown(f'<div class="empty-state">Could not read backtest file: {html.escape(str(exc))}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="empty-state">Could not read backtest file: {html.escape(str(exc))}</div>',
+                unsafe_allow_html=True,
+            )
     else:
         st.markdown(
             f'<div class="empty-state">No backtest results found yet.<br>'
-            f'Save one to <code>results/{selected_stock.lower().replace(" ", "_")}_predictions.csv</code> '
-            f'with <code>Date, Actual, Predicted</code> columns to populate this chart.</div>',
+            f'Expected <code>results/{selected_stock.lower().replace(" ", "_")}_predictions.npz</code>.</div>',
             unsafe_allow_html=True,
         )
     st.markdown('</div>', unsafe_allow_html=True)
