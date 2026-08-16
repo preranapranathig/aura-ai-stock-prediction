@@ -898,10 +898,10 @@ def get_timeframe_days(timeframe):
 
 
 def find_predictions_file(stock_name):
-    """Optional backtest results file: results/<stock>_predictions.csv with
-    columns Date, Actual, Predicted (and optionally Upper, Lower)."""
-    filename = stock_name.lower().replace(" ", "_")
+    """Find backtest file. Prefer .npz (actual/predicted), then .csv."""
+    filename = str(stock_name).lower().replace(" ", "_")
     candidates = [
+        BASE_DIR / "results" / f"{filename}_predictions.npz",
         BASE_DIR / "results" / f"{filename}_predictions.csv",
         BASE_DIR / "results" / f"{filename}_backtest.csv",
     ]
@@ -909,6 +909,44 @@ def find_predictions_file(stock_name):
         if path.exists():
             return path
     return None
+
+
+def load_backtest_df(path):
+    """Load Actual/Predicted from npz or csv."""
+    if path is None:
+        return None
+
+    if path.suffix.lower() == ".npz":
+        data = np.load(path, allow_pickle=True)
+        key_map = {k.lower(): k for k in data.files}
+        actual_key = key_map.get("actual") or key_map.get("y_true")
+        pred_key = key_map.get("predicted") or key_map.get("y_pred")
+        if actual_key is None or pred_key is None:
+            return None
+        actual = np.asarray(data[actual_key]).reshape(-1)
+        predicted = np.asarray(data[pred_key]).reshape(-1)
+        n = min(len(actual), len(predicted))
+        return pd.DataFrame({
+            "Actual": actual[:n],
+            "Predicted": predicted[:n],
+            "Date": list(range(1, n + 1)),
+        })
+
+    df = pd.read_csv(path)
+    df.columns = [str(c).strip() for c in df.columns]
+    rename = {}
+    for c in df.columns:
+        cl = c.lower()
+        if cl in ("actual", "y_true", "true"):
+            rename[c] = "Actual"
+        elif cl in ("predicted", "y_pred", "pred", "prediction"):
+            rename[c] = "Predicted"
+        elif cl in ("date", "datetime", "time"):
+            rename[c] = "Date"
+    df = df.rename(columns=rename)
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+    return df
 
 
 
@@ -2641,34 +2679,41 @@ elif page == "Uncertainty Map":
     else:
         st.markdown('<div class="empty-state">Run AI analysis on the Live Prediction page first.</div>', unsafe_allow_html=True)
 
-# ==========================================================
-# PAGE: MONTE CARLO
-# ==========================================================
-elif page == "Monte Carlo":
-    st.markdown('<div class="page-eyebrow">AURA AI</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-title">Monte Carlo Simulation</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subtitle">Distribution of predictions from repeated stochastic forward passes.</div>', unsafe_allow_html=True)
+    backtest_path = find_predictions_file(selected_stock)
+    metrics_path = find_metrics_file(selected_stock)
 
-    if parsed:
-        samples = live_result.get("samples")
-        import plotly.graph_objects as go
-        if not samples:
-            std = parsed["uncertainty"] / 1.96 if parsed["uncertainty"] else 1.0
-            samples = np.random.normal(parsed["predicted_price"], std, 500).tolist()
-            note = "Reconstructed distribution (approximate) — the live engine did not return raw samples."
-        else:
-            note = f"{len(samples)} stochastic forward passes from the live Monte Carlo Dropout run."
-        fig = go.Figure()
-        fig.add_trace(go.Histogram(x=samples, marker_color="#22d3ee", opacity=0.75, nbinsx=30))
-        fig.add_vline(x=parsed["predicted_price"], line_dash="dot", line_color="#67e8f9")
-        fig.update_layout(height=380, margin=dict(l=10, r=10, t=10, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="#9aa8bb"), xaxis=dict(title=f"Predicted price ({currency})", showgrid=False), yaxis=dict(title="Frequency", showgrid=True, gridcolor="rgba(255,255,255,0.05)"))
-        st.markdown('<div class="dash-card">', unsafe_allow_html=True)
-        st.markdown(f'<div class="dash-card-title">Prediction Distribution</div><div class="dash-card-sub">{note}</div>', unsafe_allow_html=True)
-        st.plotly_chart(fig, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="dash-card">', unsafe_allow_html=True)
+    st.markdown('<div class="dash-card-title">Prediction vs Actual</div>', unsafe_allow_html=True)
+
+    bt_df = load_backtest_df(backtest_path)
+    if bt_df is not None and {"Actual", "Predicted"}.issubset(bt_df.columns):
+        try:
+            import plotly.graph_objects as go
+            x_axis = bt_df["Date"] if "Date" in bt_df.columns else bt_df.index
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Actual"], mode="lines", name="Actual Price", line=dict(width=2.2)))
+            fig.add_trace(go.Scatter(x=x_axis, y=bt_df["Predicted"], mode="lines", name="Predicted Price", line=dict(width=2, dash="dot")))
+            fig.update_layout(
+                height=380,
+                margin=dict(l=10, r=10, t=10, b=10),
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#9aa8bb"),
+                xaxis=dict(showgrid=False),
+                yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", tickprefix=currency),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        except Exception as exc:
+            st.markdown(f'<div class="empty-state">Could not read backtest file: {html.escape(str(exc))}</div>', unsafe_allow_html=True)
     else:
-        st.markdown('<div class="empty-state">Run AI analysis on the Live Prediction page first.</div>', unsafe_allow_html=True)
-
+        st.markdown(
+            f'<div class="empty-state">No backtest results found yet.<br>'
+            f'Expected <code>results/{selected_stock.lower().replace(" ", "_")}_predictions.npz</code> '
+            f'with keys <code>actual</code>, <code>predicted</code>.</div>',
+            unsafe_allow_html=True,
+        )
+    st.markdown('</div>', unsafe_allow_html=True)
+    
 # ==========================================================
 # PAGE: BACKTESTING
 # ==========================================================
